@@ -1,7 +1,7 @@
 'use client'
-import { LoginForm } from "@/components/custom/forms/LoginForm";
-import { RegisterForm } from "@/components/custom/forms/RegisterForm";
-import { useState } from "react";
+import { LoginForm } from '@/components/custom/forms/LoginForm'
+import { RegisterForm } from '@/components/custom/forms/RegisterForm'
+import { useState } from 'react'
 
 export default function Login() {
 

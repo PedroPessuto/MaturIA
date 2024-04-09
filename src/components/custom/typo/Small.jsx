@@ -4,5 +4,5 @@ export function Small({ children, ...props }) {
     <small className={`text-sm font-medium leading-none ${props.className || ''}`}>
       {children}
     </small>
-  );
+  )
 }
