@@ -3,7 +3,7 @@ import { LoginForm } from '@/components/custom/forms/LoginForm'
 import { RegisterForm } from '@/components/custom/forms/RegisterForm'
 import { useState } from 'react'
 
-export default function Login() {
+export default function Page() {
 
   const [onLogin, setOnLogin] = useState(true)
 
