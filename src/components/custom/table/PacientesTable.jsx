@@ -2,13 +2,8 @@
 import { DataTable } from '@/components/custom/table/DataTable'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 import { H1 } from '@/components/custom/typo/H1'
+import Link from 'next/link'
 
 
 export default function PacientesTable({ data }) {
@@ -47,6 +42,12 @@ export default function PacientesTable({ data }) {
               <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 640 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M32,224H64V416H32A31.96166,31.96166,0,0,1,0,384V256A31.96166,31.96166,0,0,1,32,224Zm512-48V448a64.06328,64.06328,0,0,1-64,64H160a64.06328,64.06328,0,0,1-64-64V176a79.974,79.974,0,0,1,80-80H288V32a32,32,0,0,1,64,0V96H464A79.974,79.974,0,0,1,544,176ZM264,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,264,256Zm-8,128H192v32h64Zm96,0H288v32h64ZM456,256a40,40,0,1,0-40,40A39.997,39.997,0,0,0,456,256Zm-8,128H384v32h64ZM640,256V384a31.96166,31.96166,0,0,1-32,32H576V224h32A31.96166,31.96166,0,0,1,640,256Z"></path></svg>
             </Button>
 
+            <Link href={`/paciente/${row.original.id}`}>
+              <Button type="submit">
+                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg>
+              </Button>
+            </Link>
+
           </div>
         )
       },
@@ -57,12 +58,14 @@ export default function PacientesTable({ data }) {
   return (
     <div className="flex flex-col">
       <div className="w-full h-full flex flex-col gap-8 my-auto">
-        <di className="flex justify-between">
+        <div className="flex justify-between">
           <H1>Lista de Pacientes</H1>
-          <Button>
-            Adicionar Paciente
-          </Button>
-        </di>
+          <Link href="/cadastro-de-pacientes">
+            <Button>
+              Adicionar Paciente
+            </Button>
+          </Link>
+        </div>
         <DataTable data={data} columns={columns} />
       </div>
     </div>

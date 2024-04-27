@@ -1,70 +1,38 @@
+'use client'
 import PacientesTable from '@/components/custom/table/PacientesTable'
+import { useEffect, useState } from 'react'
+import { Loader2 } from 'lucide-react'
 
+export default function Page() {
+  const [data, setData] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
-export default async function Page() {
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/ver-pacientes')
+        const jsonData = await response.json()
+        setData(jsonData.result)
+      } catch (error) {
+        console.error('Erro ao buscar os dados:', error)
+      }
+      setIsLoading(false)
+    }
 
-  async function getData() {
-    return [
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedawd funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedro edawdawiz com tudo funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedawdao funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedro esdawda'
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedawd funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedro edawdawiz com tudo funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedawdao funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedro esdawda'
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedawd funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedro edawdawiz com tudo funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'Pedawdao funcionando',
-      },
-      {
-        id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
-        nome: 'teste'
-      },
-
-    ]
-  }
-
-  const data = await getData()
+    fetchData()
+  }, [])
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="w-full h-full flex flex-col gap-8 my-auto">
         <div className='flex w-full'>
         </div>
-        <PacientesTable data={data} />
+        {isLoading && <div className='flex w-full justify-center'>
+          <Loader2 className="h-10 w-10 animate-spin" />
+        </div>
+        }
+        {!isLoading && <PacientesTable data={data} />}
+
       </div>
     </main>
   )
