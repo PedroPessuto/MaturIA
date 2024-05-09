@@ -91,7 +91,7 @@ export function CadastroDePacienteForms({ paciente }) {
 
   return (
     <>
-      <H2 className="mb-2">{paciente != null ? 'Dados do Paciente' : 'Cadastro de Paciente'}</H2>
+      <H2 className="mb-8">{paciente != null ? 'Dados do Paciente' : 'Cadastro de Paciente'}</H2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
