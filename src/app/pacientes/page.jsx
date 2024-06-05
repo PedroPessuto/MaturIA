@@ -12,10 +12,10 @@ import {
 } from '@/components/ui/breadcrumb'
 
 
-
 export default function Page() {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+
 
   useEffect(() => {
     async function fetchData() {
@@ -47,7 +47,7 @@ export default function Page() {
               <BreadcrumbItem>
                 <BreadcrumbLink href="/">Home</BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator /> 
+              <BreadcrumbSeparator />
               <BreadcrumbItem>
                 <BreadcrumbPage>Pacientes</BreadcrumbPage>
               </BreadcrumbItem>

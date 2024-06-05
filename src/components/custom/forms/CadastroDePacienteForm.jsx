@@ -22,8 +22,14 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 
-export function CadastroDePacienteForms({ paciente }) {
+
+export function CadastroDePacienteForms({ paciente, toogleModal }) {
 
   const router = useRouter()
   const { toast } = useToast()
@@ -81,16 +87,21 @@ export function CadastroDePacienteForms({ paciente }) {
       toast({
         description:  'Paciente Adicionado Com Sucesso',
       })
+      
       router.push('/pacientes')
       router.refresh()
+      
     }
    
     setIsLoading(false)
+    if (toogleModal) {
+      toogleModal()
+    }
   }
 
 
   return (
-    <>
+    <div className='w-full'>
       <H2 className="mb-8">{paciente != null ? 'Dados do Paciente' : 'Cadastro de Paciente'}</H2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -261,6 +272,6 @@ export function CadastroDePacienteForms({ paciente }) {
 
         </form>
       </Form>
-    </>
+    </div>
   )
 }

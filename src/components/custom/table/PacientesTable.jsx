@@ -4,9 +4,21 @@ import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { H1 } from '@/components/custom/typo/H1'
 import Link from 'next/link'
+import { CadastroDePacienteForms } from '@/components/custom/forms/CadastroDePacienteForm'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { useState } from 'react'
 
 
 export default function PacientesTable({ data }) {
+  const [showModal, setShowModal] = useState(false)
+  const toogleModal = () => {
+    setShowModal(!showModal)
+  }
 
   const columns = [
     {
@@ -60,11 +72,15 @@ export default function PacientesTable({ data }) {
       <div className="w-full h-full flex flex-col gap-8 my-auto">
         <div className="flex justify-between">
           <H1>Lista de Pacientes</H1>
-          <Link href="/cadastro-de-pacientes">
-            <Button>
-              Adicionar Paciente
-            </Button>
-          </Link>
+          
+          <Dialog open={showModal} onOpenChange={toogleModal}>
+            <DialogTrigger asChild>
+              <Button onClick={toogleModal}>Adicionar Paciente</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <CadastroDePacienteForms toogleModal={toogleModal}/>
+            </DialogContent>
+          </Dialog>
         </div>
         <DataTable data={data} columns={columns} />
       </div>

@@ -49,8 +49,8 @@ export default function Page() {
             id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
             createdAt: '2024-05-04T00:00:00.000Z',
             imageBase64: '',
-            iaAge: '2024-05-01T00:00:00.000Z',
-            manualAge: '2024-04-30T00:00:00.000Z',
+            iaAge: '20,3 anos',
+            manualAge: '20,7 anos',
           },
         ])
       } catch (error) {
@@ -92,7 +92,7 @@ export default function Page() {
               {!isLoading && <CadastroDePacienteForms paciente={data} />}
             </div>
             <div className="w-full">
-              {!isLoading && <AnalysisScreen analysis={analysis} showModal={showModal}/>}
+              {!isLoading && <AnalysisScreen analysis={analysis} showModal={showModal} />}
             </div>
           </div>
         </div>

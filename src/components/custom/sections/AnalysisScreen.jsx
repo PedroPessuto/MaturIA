@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/card'
 import { Small } from '../typo/Small'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import {
   Dialog,
@@ -79,56 +80,66 @@ export function AnalysisScreen({ analysis, showModal }) {
 
       </H2>
 
-      {analysis.map((item, index) => (
-        <Card key={index}>
-          <div className='flex gap-4 flex-col md:flex-row'>
-            <div className='flex w-full justify-center items-center p-6'>
-              Imagem
+      <div className='flex flex-col gap-10'>
+        {analysis.map((item, index) => (
+          <Card key={index}>
+            <div className='flex gap-4 flex-col md:flex-row w-full'>
+              <div className='relative flex w-full md:w-1/2 justify-center items-center' style={{ height: '100%' }}>
+                <Image
+                  src="/teste.jpg"
+                  alt="Descrição da Imagem"
+                  width={500}
+                  height={400}
+                  layout="responsive"
+                  objectFit="cover"
+                  className="w-full h-full rounded-l-lg"
+                />
+              </div>
+              <div className='w-full md:w-1/2'>
+                <CardHeader>
+                  <CardTitle>Análise #{index + 1}</CardTitle>
+                  <CardDescription>
+                    <Small>
+                      {
+                        item.createdAt == null ? 'Não feita' : `Feita em:  ${formatDate(item.createdAt)}`
+                      }
+                    </Small>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className='flex flex-col gap-2'>
+                    <Large>Idade Óssea</Large>
+
+                    <Small>
+
+                      {
+                        item.createdAt == null ? 'Não feita' : <> <strong>Manual: </strong>  {item.manualAge}</>
+                      }
+
+                    </Small>
+                    <Small>
+                      {
+                        item.createdAt == null ? 'Não feita' : <> <strong>IA: </strong>  {item.iaAge}</>
+                      }
+                    </Small>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <div className='flex-col 2xl:flex-row w-full flex gap-4 '>
+                    <Button>
+                      Análise Manual
+                    </Button>
+                    <Button>
+                      Análise Por IA
+                    </Button>
+                  </div>
+                </CardFooter>
+              </div>
             </div>
-            <div>
-              <CardHeader>
-                <CardTitle>Análise #{index + 1}</CardTitle>
-                <CardDescription>
-                  <Small>
-                    {
-                      item.createdAt == null ? 'Não feita' : `Feita em:  ${formatDate(item.createdAt)}`
-                    }
-                  </Small>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className='flex flex-col gap-2'>
-                  <Large>Idade Óssea</Large>
+          </Card>
 
-                  <Small>
-
-                    {
-                      item.createdAt == null ? 'Não feita' : <> <strong>Manual: </strong>  {formatDate(item.manualAge)}</>
-                    }
-
-                  </Small>
-                  <Small>
-                    {
-                      item.createdAt == null ? 'Não feita' : <> <strong>IA: </strong>  {formatDate(item.iaAge)}</>
-                    }
-                  </Small>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <div className='flex-col md:flex-row w-full flex gap-4 items-end'>
-                  <Button>
-                    Análise Manual
-                  </Button>
-                  <Button>
-                    Análise Por IA
-                  </Button>
-                </div>
-              </CardFooter>
-            </div>
-          </div>
-        </Card>
-
-      ))}
+        ))}
+      </div>
     </>
   )
 }

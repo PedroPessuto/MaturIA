@@ -50,7 +50,7 @@ export function LoginForm({ onClick }) {
           toast({
             description: 'Login Feito Com Sucesso',
           })
-          router.push('/')
+          router.push('/pacientes')
           router.refresh()
         }
 
