@@ -25,8 +25,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { AnalysisForm } from '../forms/AnalysisForm'
+import { useState } from 'react'
+import { AnaliseManualForm } from '../forms/AnaliseManualForm'
 
-export function AnalysisScreen({ analysis, showModal }) {
+export function AnalysisScreen({ analysis }) {
 
   const pathname = usePathname()
   const formatDate = (dateString) => {
@@ -36,6 +38,17 @@ export function AnalysisScreen({ analysis, showModal }) {
     const year = date.getFullYear()
     return `${day}/${month}/${year}`
   }
+  const [showModal, setShowModal] = useState(false)
+
+  const toogleModal = () => {
+    setShowModal(!showModal)
+  }
+
+  const [showManualModal, setShowManualModal] = useState(false)
+
+  const toogleManualModal = () => {
+    setShowManualModal(!showManualModal)
+  }
 
   return (
     <>
@@ -44,35 +57,19 @@ export function AnalysisScreen({ analysis, showModal }) {
       <H2 className="mb-8">
         <div className='flex justify-between'>
           Análises do Paciente
-          {/* <Link href={`${pathname}/nova-analise`} replace={false}>
-            <Button>
-              Nova Análise
-            </Button>
-          </Link> */}
-          <Dialog>
+          <Dialog open={showModal} onOpenChange={toogleModal}>
             <DialogTrigger asChild>
               <Button>Nova Análise</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
                 <DialogTitle>Nova Análise</DialogTitle>
-                {/* <DialogDescription>
-                  Anyone who has this link will be able to view this.
-                </DialogDescription> */}
               </DialogHeader>
               <div className="flex items-center space-x-2">
                 <div className="grid flex-1 gap-2">
-                  <AnalysisForm />
+                  <AnalysisForm toogleModal={toogleModal} />
                 </div>
               </div>
-              {/* <DialogFooter className="sm:justify-between justify-start">
-                <DialogClose asChild>
-                  <Button type="button" variant="secondary">
-                    Fechar
-                  </Button>
-                </DialogClose>
-                <Button type="submit">Save changes</Button>
-              </DialogFooter> */}
             </DialogContent>
           </Dialog>
 
@@ -111,24 +108,31 @@ export function AnalysisScreen({ analysis, showModal }) {
                     <Large>Idade Óssea</Large>
 
                     <Small>
-
                       {
-                        item.createdAt == null ? 'Não feita' : <> <strong>Manual: </strong>  {item.manualAge}</>
+                        item.iaAno == null ? 'Não feita' : <> <strong>IA: </strong>  {`${item.iaAno} anos ${item.iaMes} meses  ${item.iaDia} dias `}</>
                       }
 
                     </Small>
                     <Small>
                       {
-                        item.createdAt == null ? 'Não feita' : <> <strong>IA: </strong>  {item.iaAge}</>
+                        item.manualAno == null ? 'Não feita' : <> <strong>Manual: </strong>  {`${item.manualAno} anos ${item.manualMes} meses  ${item.manualDia} dias `}</>
                       }
                     </Small>
                   </div>
                 </CardContent>
                 <CardFooter>
                   <div className='flex-col 2xl:flex-row w-full flex gap-4 '>
-                    <Button>
-                      Análise Manual
-                    </Button>
+                    <Dialog open={showManualModal} onOpenChange={toogleManualModal}>
+                      <DialogTrigger asChild>
+                        <Button>Análise Manual</Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md">
+                        <DialogHeader>
+                          <DialogTitle>Análise Manual</DialogTitle>
+                        </DialogHeader>
+                        <AnaliseManualForm toogleManualModal={toogleManualModal} />
+                      </DialogContent>
+                    </Dialog>
                     <Button>
                       Análise Por IA
                     </Button>

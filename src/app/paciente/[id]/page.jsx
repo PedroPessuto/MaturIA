@@ -1,7 +1,7 @@
 'use client'
 
 import { Loader2 } from 'lucide-react'
-import { CadastroDePacienteForms } from '@/components/custom/forms/CadastroDePacienteForm'
+import { DadosPacienteForm } from '@/components/custom/forms/DadosPacienteForm'
 import { AnalysisScreen } from '@/components/custom/sections/AnalysisScreen'
 import { useEffect, useState } from 'react'
 import {
@@ -18,7 +18,6 @@ export default function Page() {
   const [data, setData] = useState(null)
   const [analysis, setAnalysis] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     async function getData() {
@@ -49,8 +48,12 @@ export default function Page() {
             id: '659fa0d6-554a-435c-b84b-243fb4cb2166',
             createdAt: '2024-05-04T00:00:00.000Z',
             imageBase64: '',
-            iaAge: '20,3 anos',
-            manualAge: '20,7 anos',
+            iaDia: '23',
+            iaMes: '1',
+            iaAno: '71',
+            manualDia: '10',
+            manualMes: '4',
+            manualAno: '70',
           },
         ])
       } catch (error) {
@@ -71,31 +74,37 @@ export default function Page() {
             <Loader2 className="h-10 w-10 animate-spin" />
           </div>
         )}
-        <div className='flex flex-col gap-8'>
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/pacientes">Pacientes</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Informações do Paciente</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-          <div className="flex w-full gap-5 md:gap-20 flex-col lg:flex-row">
-            <div className="w-full">
-              {!isLoading && <CadastroDePacienteForms paciente={data} />}
-            </div>
-            <div className="w-full">
-              {!isLoading && <AnalysisScreen analysis={analysis} showModal={showModal} />}
+
+
+        {!isLoading &&
+          <div className='flex flex-col gap-8'>
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/pacientes">Pacientes</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>Informações do Paciente</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+            <div className="flex w-full gap-5 md:gap-20 flex-col lg:flex-row">
+              <div className="w-full">
+                {!isLoading && <DadosPacienteForm paciente={data} />}
+              </div>
+              <div className="w-full">
+                {!isLoading && <AnalysisScreen analysis={analysis} />}
+              </div>
             </div>
           </div>
-        </div>
+        }
+
+
 
       </div>
     </main>

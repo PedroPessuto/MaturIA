@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowUpDown } from 'lucide-react'
 import { H1 } from '@/components/custom/typo/H1'
 import Link from 'next/link'
-import { CadastroDePacienteForms } from '@/components/custom/forms/CadastroDePacienteForm'
+import { DadosPacienteForm } from '@/components/custom/forms/DadosPacienteForm'
 
 import {
   Dialog,
@@ -78,7 +78,7 @@ export default function PacientesTable({ data }) {
               <Button onClick={toogleModal}>Adicionar Paciente</Button>
             </DialogTrigger>
             <DialogContent>
-              <CadastroDePacienteForms toogleModal={toogleModal}/>
+              <DadosPacienteForm toogleModal={toogleModal}/>
             </DialogContent>
           </Dialog>
         </div>

@@ -22,14 +22,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-
-
-export function CadastroDePacienteForms({ paciente, toogleModal }) {
+export function DadosPacienteForm({ paciente, toogleModal }) {
 
   const router = useRouter()
   const { toast } = useToast()
