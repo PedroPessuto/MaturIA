@@ -21,8 +21,8 @@ export function AnaliseIaForm({ toogleIaModal }) {
     {
       name: 'Etapa 1',
       descricao: 'Essa é a primeira etapa. A descrição deve ser quebrada corretamente para caber no espaço disponível.',
-      imagensRaiox: [{ nome: 'Imagem 1', caminho: '/teste.jpg' }, { nome: 'Imagem 2', caminho: '/teste.jpg' }, { nome: 'Imagem 2', caminho: '/teste.jpg' }, { nome: 'Imagem 2', caminho: '/teste.jpg' }, { nome: 'Imagem 2', caminho: '/teste.jpg' }, { nome: 'Imagem 2', caminho: '/teste.jpg' }, { nome: 'Imagem 2', caminho: '/teste.jpg' }, { nome: 'Imagem 2', caminho: '/teste.jpg' }],
-      imagensDesenho: [{ nome: 'Imagem 1 Desenho', caminho: '/teste.jpg' }, { nome: 'Imagem 2 Desenho', caminho: '/teste.jpg' }],
+      imagensRaiox: [{ nome: 'Imagem 1', caminho: '/teste.jpg' }, { nome: 'Imagem 2', caminho: '/teste.jpg' }],
+      imagensDesenho: [{ nome: 'Imagem 1 Desenho', caminho: '/teste2.jpg' }, { nome: 'Imagem 2 Desenho', caminho: '/teste2.jpg' }],
     },
     {
       name: 'Etapa 2',
@@ -70,112 +70,113 @@ export function AnaliseIaForm({ toogleIaModal }) {
     }))
   }
 
-  const images = viewType === 'raiox' ? steps[currentStep].imagensRaiox : steps[currentStep].imagensDesenho
-
   return (
-    <div className="w-full flex flex-col justify-between gap-4">
-      <H2 className="break-words">{steps[currentStep].descricao}</H2>
-      <div className="flex h-full w-full gap-8">
-        <div className="w-2/3">
-          <Tabs defaultValue="raiox">
-            <TabsContent value="raiox">
-              <div className="grid grid-cols-4 gap-4">
-                {images.map((image, index) => (
-                  <div
-                    key={index}
-                    className={`relative rounded-lg ${selecionados[currentStep] === index ? 'border-4 border-blue-500' : ''}`}
-                  >
-                    <Image
-                      src={image.caminho}
-                      alt={image.nome}
-                      width={100}
-                      height={100}
-                      layout="responsive"
-                      objectFit="cover"
-                      className="w-full h-full rounded-lg"
-                    />
-                    <Button onClick={() => handleSelectImage(currentStep, index)} className="w-full">
-                      {selecionados[currentStep] === index ? 'Selecionado' : `Selecionar ${image.nome}`}
-                    </Button>
-                  </div>
-                ))}
+    <div className="flex-col flex h-full w-full gap-8 overflow-y-auto">
+      <div className="w-full flex flex-col justify-between gap-4">
+        <H2 className="break-words">{steps[currentStep].descricao}</H2>
+        <div className="flex-col flex h-full w-full gap-8 overflow-y-auto">
+          <div className="w-full sm:w-2/3">
+            <Tabs defaultValue={viewType} onValueChange={handleViewTypeChange}>
+              <TabsContent value="raiox">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {steps[currentStep].imagensRaiox.map((image, index) => (
+                    <div
+                      key={index}
+                      className={`relative flex flex-col items-center justify-between cursor-pointer h-full rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-blue-500' : 'border-neutral-200'}`}
+                      onClick={() => handleSelectImage(currentStep, index)}
+                    >
+                      <Image
+                        src={image.caminho}
+                        alt={image.nome}
+                        width={100}
+                        height={100}
+                        layout="responsive"
+                        objectFit="cover"
+                        className="w-full h-full rounded-t-lg"
+                      />
+                      <button className={`w-full p-2 font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
+                        {selecionados[currentStep] === index ? 'Selecionado' : `Selecionar ${image.nome}`}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+              <TabsContent value="desenho">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {steps[currentStep].imagensDesenho.map((image, index) => (
+                    <div
+                      key={index}
+                      className={`relative flex flex-col items-center justify-between h-full rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-blue-500' : 'border-neutral-200'}`}
+                      onClick={() => handleSelectImage(currentStep, index)}
+                    >
+                      <Image
+                        src={image.caminho}
+                        alt={image.nome}
+                        width={100}
+                        height={100}
+                        layout="responsive"
+                        objectFit="cover"
+                        className="w-full h-full rounded-t-lg"
+                      />
+                      <button className={`w-full p-2 font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
+                        {selecionados[currentStep] === index ? 'Selecionado' : `Selecionar ${image.nome}`}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </TabsContent>
+              <div className='flex w-full justify-center mt-8'>
+                <TabsList>
+                  <TabsTrigger value="raiox">Raio-X</TabsTrigger>
+                  <TabsTrigger value="desenho">Desenho</TabsTrigger>
+                </TabsList>
               </div>
-            </TabsContent>
-            <TabsContent value="desenho">
-              <div className="grid grid-cols-4 gap-4">
-                {images.map((image, index) => (
-                  <div
-                    key={index}
-                    className={`relative rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-primary' : 'border-neutral-200'}`}
-                  >
-                    <Image
-                      src={image.caminho}
-                      alt={image.nome}
-                      width={100}
-                      height={100}
-                      layout="responsive"
-                      objectFit="cover"
-                      className="w-full h-full"
-                    />
+            </Tabs>
+          </div>
+          <div className="w-full sm:w-1/3 flex">
+            <Image
+              src={'/teste.jpg'}
+              alt={'Imagem Para Comparação'}
+              width={100}
+              height={100}
+              layout="responsive"
+              objectFit="cover"
+              className="w-full h-full rounded-lg"
+            />
+          </div>
+        </div>
 
-                   
-                    <button onClick={() => handleSelectImage(currentStep, index)} className={`w-full p-2 font-medium  ${selecionados[currentStep] === index ? 'bg-primary text-white' : 'bg-neutral-200'}`}>
-                      {selecionados[currentStep] === index ? 'Selecionado' : `Selecionar ${image.nome}`}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-            <div className="w-full flex justify-center mt-8">
-              <TabsList>
-                <TabsTrigger value="raiox">Raio-X</TabsTrigger>
-                <TabsTrigger value="desenho">Desenho</TabsTrigger>
-              </TabsList>
-            </div>
-          </Tabs>
-        </div>
-        <div className="w-1/3 flex">
-          <Image
-            src={'/teste.jpg'}
-            alt={'Imagem Para Comparação'}
-            width={100}
-            height={100}
-            layout="responsive"
-            objectFit="cover"
-            className="w-full h-full rounded-lg"
-          />
-        </div>
-      </div>
-
-      <div className="flex mt-4">
-        <div className="flex w-full">
-          {currentStep !== 0 && (
-            <Button onClick={handlePreviousStep} disabled={isLoading}>
-              Anterior
-            </Button>
-          )}
-        </div>
-        <div className="flex w-full justify-end">
-          {currentStep !== steps.length - 1 && (
-            <Button onClick={handleNextStep} disabled={currentStep === steps.length - 1 || isLoading}>
-              Próximo
-            </Button>
-          )}
-          {currentStep === steps.length - 1 && (
-            <>
-              {isLoading ? (
-                <Button disabled>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                </Button>
-              ) : (
-                <Button onClick={handleSubmit}>
-                  Salvar
-                </Button>
-              )}
-            </>
-          )}
+        <div className="flex mt-4">
+          <div className="flex w-full">
+            {currentStep !== 0 && (
+              <Button onClick={handlePreviousStep} disabled={isLoading}>
+                Anterior
+              </Button>
+            )}
+          </div>
+          <div className="flex w-full justify-end">
+            {currentStep !== steps.length - 1 && (
+              <Button onClick={handleNextStep} disabled={currentStep === steps.length - 1 || isLoading}>
+                Próximo
+              </Button>
+            )}
+            {currentStep === steps.length - 1 && (
+              <>
+                {isLoading ? (
+                  <Button disabled>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  </Button>
+                ) : (
+                  <Button onClick={handleSubmit}>
+                    Salvar
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>
+
   )
 }

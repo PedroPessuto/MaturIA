@@ -62,7 +62,7 @@ export function AnalysisScreen({ analysis }) {
 
 
       <H2 className="mb-8">
-        <div className='flex justify-between'>
+        <div className='flex-col sm:flex justify-between gap-8'>
           Análises do Paciente
           <Dialog open={showModal} onOpenChange={toogleModal}>
             <DialogTrigger asChild>
@@ -140,11 +140,11 @@ export function AnalysisScreen({ analysis }) {
                         <AnaliseManualForm toogleManualModal={toogleManualModal} />
                       </DialogContent>
                     </Dialog>
-                    <Dialog open={showIaModal}>
+                    <Dialog open={showIaModal} onOpenChange={toogleIaModal}>
                       <DialogTrigger asChild>
                         <Button onClick={toogleIaModal}>Análise Por IA</Button>
                       </DialogTrigger>
-                      <DialogContent className="max-w-7xl">
+                      <DialogContent className="max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl" style={{ height: '90vh' }}>
                         <AnaliseIaForm toogleIaModal={toogleIaModal} />
                       </DialogContent>
                     </Dialog>
@@ -152,10 +152,11 @@ export function AnalysisScreen({ analysis }) {
                 </CardFooter>
               </div>
             </div>
-          </Card>
+          </Card >
 
-        ))}
-      </div>
+        ))
+        }
+      </div >
     </>
   )
 }
