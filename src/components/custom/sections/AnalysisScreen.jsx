@@ -62,7 +62,7 @@ export function AnalysisScreen({ analysis }) {
 
 
       <H2 className="mb-8">
-        <div className='flex-col sm:flex justify-between gap-8'>
+        <div className='flex flex-col sm:flex-row justify-between gap-8'>
           Análises do Paciente
           <Dialog open={showModal} onOpenChange={toogleModal}>
             <DialogTrigger asChild>

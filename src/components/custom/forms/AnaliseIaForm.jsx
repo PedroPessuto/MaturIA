@@ -37,8 +37,14 @@ export function AnaliseIaForm({ toogleIaModal }) {
   }
 
   const handleNextStep = () => {
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1)
+    if (selecionados[currentStep] !== undefined) {
+      if (currentStep < steps.length - 1) {
+        setCurrentStep(currentStep + 1)
+      }
+    } else {
+      toast({
+        description: 'Por favor, selecione uma imagem antes de prosseguir.',
+      })
     }
   }
 
@@ -72,9 +78,9 @@ export function AnaliseIaForm({ toogleIaModal }) {
 
   return (
     <div className="flex-col flex h-full w-full gap-8 overflow-y-auto">
-      <div className="w-full flex flex-col justify-between gap-4">
+      <div className="w-full h-full flex flex-col justify-between gap-4">
         <H2 className="break-words">{steps[currentStep].descricao}</H2>
-        <div className="flex-col flex h-full w-full gap-8 overflow-y-auto">
+        <div className="flex-col flex sm:flex-row h-full w-full gap-8 overflow-y-auto">
           <div className="w-full sm:w-2/3">
             <Tabs defaultValue={viewType} onValueChange={handleViewTypeChange}>
               <TabsContent value="raiox">
@@ -156,7 +162,7 @@ export function AnaliseIaForm({ toogleIaModal }) {
           </div>
           <div className="flex w-full justify-end">
             {currentStep !== steps.length - 1 && (
-              <Button onClick={handleNextStep} disabled={currentStep === steps.length - 1 || isLoading}>
+              <Button onClick={handleNextStep} disabled={selecionados[currentStep] === undefined || isLoading}>
                 Próximo
               </Button>
             )}
@@ -167,7 +173,7 @@ export function AnaliseIaForm({ toogleIaModal }) {
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   </Button>
                 ) : (
-                  <Button onClick={handleSubmit}>
+                  <Button onClick={handleSubmit} disabled={selecionados[currentStep] === undefined}>
                     Salvar
                   </Button>
                 )}
@@ -177,6 +183,5 @@ export function AnaliseIaForm({ toogleIaModal }) {
         </div>
       </div>
     </div>
-
   )
 }
