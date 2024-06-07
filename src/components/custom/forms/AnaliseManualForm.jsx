@@ -30,12 +30,10 @@ export function AnaliseManualForm({ toogleManualModal }) {
 
   const years = Array.from({ length: 121 }, (_, i) => i.toString())
   const months = Array.from({ length: 12 }, (_, i) => (i).toString())
-  const days = Array.from({ length: 32 }, (_, i) => (i).toString())
 
   const formSchema = z.object({
     ano: z.string().min(1, { message: 'Ano é obrigatório' }),
     mes: z.string().min(1, { message: 'Mês é obrigatório' }),
-    dia: z.string().min(1, { message: 'Dia é obrigatório' }),
   })
 
   const form = useForm({
@@ -43,7 +41,6 @@ export function AnaliseManualForm({ toogleManualModal }) {
     defaultValues: {
       ano: '',
       mes: '',
-      dia: '',
     },
   })
 
@@ -67,12 +64,13 @@ export function AnaliseManualForm({ toogleManualModal }) {
     <div className="w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-          <div className="flex justify-between">
+          <div className="flex gap-4">
             <FormField
+              
               control={form.control}
               name="ano"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel>Anos</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -99,7 +97,7 @@ export function AnaliseManualForm({ toogleManualModal }) {
               control={form.control}
               name="mes"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel>Meses</FormLabel>
                   <Select
                     onValueChange={field.onChange}
@@ -114,33 +112,6 @@ export function AnaliseManualForm({ toogleManualModal }) {
                       {months.map((month) => (
                         <SelectItem key={month} value={month}>
                           {month}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="dia"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Dias</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecione" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {days.map((day) => (
-                        <SelectItem key={day} value={day}>
-                          {day}
                         </SelectItem>
                       ))}
                     </SelectContent>

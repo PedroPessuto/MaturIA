@@ -27,10 +27,10 @@ import {
 import { AnalysisForm } from '../forms/AnalysisForm'
 import { useState } from 'react'
 import { AnaliseManualForm } from '../forms/AnaliseManualForm'
+import { AnaliseIaForm } from '../forms/AnaliseIaForm'
 
 export function AnalysisScreen({ analysis }) {
 
-  const pathname = usePathname()
   const formatDate = (dateString) => {
     const date = new Date(dateString)
     const day = date.getDate().toString().padStart(2, '0')
@@ -49,6 +49,13 @@ export function AnalysisScreen({ analysis }) {
   const toogleManualModal = () => {
     setShowManualModal(!showManualModal)
   }
+
+  const [showIaModal, setShowIaModal] = useState(false)
+
+  const toogleIaModal = () => {
+    setShowIaModal(!showIaModal)
+  }
+
 
   return (
     <>
@@ -109,19 +116,19 @@ export function AnalysisScreen({ analysis }) {
 
                     <Small>
                       {
-                        item.iaAno == null ? 'Não feita' : <> <strong>IA: </strong>  {`${item.iaAno} anos ${item.iaMes} meses  ${item.iaDia} dias `}</>
+                        item.iaAno == null ? 'Não feita' : <> <strong>IA: </strong>  {`${item.iaAno} anos ${item.iaMes} meses`}</>
                       }
 
                     </Small>
                     <Small>
                       {
-                        item.manualAno == null ? 'Não feita' : <> <strong>Manual: </strong>  {`${item.manualAno} anos ${item.manualMes} meses  ${item.manualDia} dias `}</>
+                        item.manualAno == null ? 'Não feita' : <> <strong>Manual: </strong>  {`${item.manualAno} anos ${item.manualMes} meses`}</>
                       }
                     </Small>
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <div className='flex-col 2xl:flex-row w-full flex gap-4 '>
+                  <div className='flex-col 2xl:flex-row flex gap-4 '>
                     <Dialog open={showManualModal} onOpenChange={toogleManualModal}>
                       <DialogTrigger asChild>
                         <Button>Análise Manual</Button>
@@ -133,9 +140,14 @@ export function AnalysisScreen({ analysis }) {
                         <AnaliseManualForm toogleManualModal={toogleManualModal} />
                       </DialogContent>
                     </Dialog>
-                    <Button>
-                      Análise Por IA
-                    </Button>
+                    <Dialog open={showIaModal}>
+                      <DialogTrigger asChild>
+                        <Button onClick={toogleIaModal}>Análise Por IA</Button>
+                      </DialogTrigger>
+                      <DialogContent className="max-w-7xl">
+                        <AnaliseIaForm toogleIaModal={toogleIaModal} />
+                      </DialogContent>
+                    </Dialog>
                   </div>
                 </CardFooter>
               </div>
