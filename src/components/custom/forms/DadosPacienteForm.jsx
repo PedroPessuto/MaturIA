@@ -36,9 +36,9 @@ export function DadosPacienteForm({ paciente, toogleModal }) {
   const currentMonth = month.toString()
   const currentDay = date.getDate().toString()
 
-  const years = Array.from({ length: currentYear - 1899 }, (_, i) => 1900 + i)
-  const months = Array.from({ length: 12 }, (_, i) => i + 1)
-  const days = Array.from({ length: 31 }, (_, i) => i + 1)
+  const years = Array.from({ length: currentYear - 1899 }, (_, i) => (1900 + i).toString())
+  const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString())
+  const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString())
 
 
   const formSchema = z.object({
@@ -94,7 +94,7 @@ export function DadosPacienteForm({ paciente, toogleModal }) {
 
 
   return (
-    <div className='w-full'>
+    <div className='w-full overflow-y-auto p-4'>
       <H2 className="mb-8">{paciente != null ? 'Dados do Paciente' : 'Cadastro de Paciente'}</H2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

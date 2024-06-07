@@ -73,7 +73,7 @@ export function AnalysisForm({toogleModal}) {
               <FormItem>
                 <FormControl>
                   <div className="grid w-full max-w-sm items-center gap-1.5">
-                    <Label htmlFor="picture">Picture</Label>
+                    <Label htmlFor="picture">Radiografia</Label>
                     <Input
                       type="file"
                       accept=".jpeg, .jpg, .png"

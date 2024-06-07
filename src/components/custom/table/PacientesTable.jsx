@@ -72,13 +72,13 @@ export default function PacientesTable({ data }) {
       <div className="w-full h-full flex flex-col gap-8 my-auto">
         <div className="flex justify-between">
           <H1>Lista de Pacientes</H1>
-          
+
           <Dialog open={showModal} onOpenChange={toogleModal}>
             <DialogTrigger asChild>
               <Button onClick={toogleModal}>Adicionar Paciente</Button>
             </DialogTrigger>
-            <DialogContent>
-              <DadosPacienteForm toogleModal={toogleModal}/>
+            <DialogContent style={{ height: '90vh' }}>
+              <DadosPacienteForm toogleModal={toogleModal} />
             </DialogContent>
           </Dialog>
         </div>
