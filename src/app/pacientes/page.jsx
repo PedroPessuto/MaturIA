@@ -10,25 +10,30 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import PacientesTable from './components/PatientsTable'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function Page() {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const { toast } = useToast()
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('/api/ver-pacientes')
+        const response = await fetch('/api/patients/get', { cache: 'no-store'})
         const jsonData = await response.json()
         setData(jsonData.result)
-      } catch (error) {
-        console.error('Erro ao buscar os dados:', error)
+      } 
+      catch (error) {
+        toast.error({
+          description: `Erro ao buscar os dados: ${error}`,
+        })
       }
       setIsLoading(false)
     }
 
     fetchData()
-  }, [])
+  }, [toast])
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">

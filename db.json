@@ -1,0 +1,37 @@
+{
+  "pacientes": [
+    {
+      "id": "1",
+      "nome": "Pedro Bandeira Fenomeno",
+      "peso": 80.5,
+      "altura": 175,
+      "sexoBiologico": "Masculino",
+      "dia": 30,
+      "mes": 7,
+      "ano": 2004,
+      "comorbidades": ""
+    },
+    {
+      "id": "9b36",
+      "nome": "dawd",
+      "peso": 121,
+      "altura": 2121,
+      "ano": "2024",
+      "mes": "8",
+      "dia": "12",
+      "sexoBiologico": "Feminino",
+      "comorbidades": "dwad"
+    },
+    {
+      "id": "fb28",
+      "nome": "dawd",
+      "peso": 21,
+      "altura": 121,
+      "ano": "2024",
+      "mes": "8",
+      "dia": "12",
+      "sexoBiologico": "Feminino",
+      "comorbidades": ""
+    }
+  ]
+}
