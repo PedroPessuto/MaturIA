@@ -2,18 +2,14 @@ import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 export const authOptions = {
-  // Configure one or more authentication providers
   providers: [
     CredentialsProvider({
-      // The name to dis  play on the sign in form (e.g. "Sign in with...")
       name: 'credentials',
-      // `credentials` is used to generate a form on the sign in page.
       credentials: {
         email: { label: 'Email', type: 'email', placeholder: 'E-mail' },
         senha: { label: 'Senha', type: 'password', placeholder: 'Senha' }
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
 
         // Verifica se está faltando dados
         if (!credentials.email || !credentials.senha) {

@@ -1,7 +1,7 @@
 'use client'
-import { LoginForm } from '@/components/custom/forms/LoginForm'
-import { RegisterForm } from '@/components/custom/forms/RegisterForm'
 import { useState } from 'react'
+import { LoginForm } from './components/LoginForm'
+import { RegisterForm } from './components/RegisterForm'
 
 export default function Page() {
 
@@ -12,14 +12,14 @@ export default function Page() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-5 md:p-24">
-      <div className="w-1/2 h-full flex flex-col gap-8 my-auto">
+    <main className="h-screen">
+      <div className="flex flex-col items-center justify-center w-full h-full gap-8 p-8">
         {
           onLogin && <LoginForm onClick={handleOnLogin} />
         }
-        {
+        {/* {
           !onLogin && <RegisterForm onClick={handleOnLogin} />
-        }
+        } */}
       </div>
     </main>
   )

@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { H2 } from '@/components/custom/typo/H2'
 import { Loader2 } from 'lucide-react'
-
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -13,7 +12,6 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useToast } from '@/components/ui/use-toast'
 import { Textarea } from '@/components/ui/textarea'
-
 import {
   Select,
   SelectContent,
@@ -40,7 +38,6 @@ export function DadosPacienteForm({ paciente, toogleModal }) {
   const months = Array.from({ length: 12 }, (_, i) => (i + 1).toString())
   const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString())
 
-
   const formSchema = z.object({
     nome: z.string().min(3, { message: 'Nome precisa ter no mínimo 3 caracteres' }),
     peso: z.string().regex(/^\d+(\.\d+)?$/, 'Peso deve ser um número').transform(Number),
@@ -51,7 +48,6 @@ export function DadosPacienteForm({ paciente, toogleModal }) {
     sexoBiologico: z.string({ message: 'Selecione um sexo biológico' }),
     comorbidades: z.string().optional(),
   })
-
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -72,20 +68,20 @@ export function DadosPacienteForm({ paciente, toogleModal }) {
 
     if (paciente != null) {
       toast({
-        description:  'Dados atualizado com sucesso',
+        description: 'Dados atualizado com sucesso',
       })
       router.refresh()
     }
     else {
       toast({
-        description:  'Paciente Adicionado Com Sucesso',
+        description: 'Paciente Adicionado Com Sucesso',
       })
-      
+
       router.push('/pacientes')
       router.refresh()
-      
+
     }
-   
+
     setIsLoading(false)
     if (toogleModal) {
       toogleModal()
@@ -94,10 +90,10 @@ export function DadosPacienteForm({ paciente, toogleModal }) {
 
 
   return (
-    <div className='w-full overflow-y-auto p-4'>
+    <div className='w-full overflow-y-auto px-2'>
       <H2 className="mb-8">{paciente != null ? 'Dados do Paciente' : 'Cadastro de Paciente'}</H2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
           <FormField
             control={form.control}
             name="nome"

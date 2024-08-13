@@ -2,7 +2,7 @@
 
 import { Loader2 } from 'lucide-react'
 import { DadosPacienteForm } from '@/components/custom/forms/DadosPacienteForm'
-import { AnalysisScreen } from '@/components/custom/sections/AnalysisScreen'
+import { AnalysisScreen } from './components/AnalysisScreen'
 import { useEffect, useState } from 'react'
 import {
   Breadcrumb,
@@ -15,6 +15,7 @@ import {
 
 
 export default function Page() {
+  
   const [data, setData] = useState(null)
   const [analysis, setAnalysis] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -32,7 +33,7 @@ export default function Page() {
           dia: '30',
           mes: '7',
           ano: '2004',
-          analisesId: [],
+          analisesId: ['659fa0d6-554a-435c-b84b-243fb4cb2166', '659fa0d6-554a-435c-b84b-243fb4cb4446'],
         })
       } catch (error) {
         console.error('Erro ao buscar dados do paciente:', error)
@@ -53,6 +54,7 @@ export default function Page() {
             manualMes: '4',
             manualAno: '70',
           },
+          
         ])
       } catch (error) {
         console.error('Erro ao buscar dados do paciente:', error)
@@ -65,8 +67,8 @@ export default function Page() {
   }, [])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-5 md:p-24">
-      <div className="w-full h-full">
+    <main className="flex min-h-screen flex-col items-center justify-between">
+      <div className="w-full h-full p-12 mt-12">
         {isLoading && (
           <div className="flex w-full justify-center">
             <Loader2 className="h-10 w-10 animate-spin" />
@@ -75,7 +77,7 @@ export default function Page() {
 
 
         {!isLoading &&
-          <div className='flex flex-col gap-8'>
+          <div className='flex flex-col gap-8 '>
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -96,7 +98,7 @@ export default function Page() {
                 {!isLoading && <DadosPacienteForm paciente={data} />}
               </div>
               <div className="w-full">
-                {!isLoading && <AnalysisScreen analysis={analysis} />}
+                {!isLoading && <AnalysisScreen analysis={analysis} paciente={data} />}
               </div>
             </div>
           </div>
