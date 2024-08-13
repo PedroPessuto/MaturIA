@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Loader2 } from 'lucide-react'
 import {
   Breadcrumb,
@@ -17,23 +17,22 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(true)
   const { toast } = useToast()
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch('/api/patients/get', { cache: 'no-store'})
-        const jsonData = await response.json()
-        setData(jsonData.result)
-      } 
-      catch (error) {
-        toast.error({
-          description: `Erro ao buscar os dados: ${error}`,
-        })
-      }
-      setIsLoading(false)
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await fetch('/api/patients/get', { cache: 'no-store' })
+      const jsonData = await response.json()
+      setData(jsonData.result)
+    } catch (error) {
+      toast.error({
+        description: `Erro ao buscar os dados: ${error}`,
+      })
     }
-
-    fetchData()
+    setIsLoading(false)
   }, [toast])
+
+  useEffect(() => {
+    fetchData()
+  }, [toast, fetchData])
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
@@ -58,7 +57,7 @@ export default function Page() {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <PacientesTable data={data} />
+          <PacientesTable data={data} fetchData={fetchData} />
         </>}
       </div>
     </main>

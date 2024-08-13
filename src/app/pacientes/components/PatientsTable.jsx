@@ -1,15 +1,10 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { DadosPacienteForm } from '@/components/custom/forms/DadosPacienteForm'
 import { ArrowUpDown } from 'lucide-react'
 import { H2 } from '@/components/custom/typo/H2'
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from '@/components/ui/dialog'
 
 import {
   flexRender,
@@ -19,7 +14,7 @@ import {
   getPaginationRowModel,
   getFilteredRowModel
 } from '@tanstack/react-table'
-
+import { useToast } from '@/components/ui/use-toast'
 import {
   Table,
   TableBody,
@@ -29,18 +24,46 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Input } from '@/components/ui/input'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
+import { DialogClose } from '@radix-ui/react-dialog'
 
-export default function PacientesTable({ data }) {
+export default function PacientesTable({ data, fetchData }) {
   const [showModal, setShowModal] = useState(false)
+  const { toast } = useToast()
 
   const toggleModal = () => {
     setShowModal(!showModal)
   }
 
-  // Verificação para garantir que data esteja definido e seja um array
-  const tableData = Array.isArray(data) ? data : []
+  async function deletePatient(patientId) {
+    try {
+      await fetch('/api/patients/delete', {
+        method: 'DELETE',
+        cache: 'no-store',
+        body: JSON.stringify(patientId),
+      })
 
-  // Table
+      await fetchData()
+      
+      toast({
+        description: 'Paciente Excluído Com Sucesso',
+      })
+
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        description: `Erro ao excluir paciente: ${error.message}`,
+      })
+    } 
+  }
+
+
   const columns = [
     {
       accessorKey: 'id',
@@ -68,9 +91,31 @@ export default function PacientesTable({ data }) {
           <div className='flex gap-3'>
             <Link href={`/paciente/${row.original.id}`}>
               <Button type="submit">
-                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg>
+                <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg>
               </Button>
             </Link>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="bg-red-600 hover:bg-red-900">
+                  <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 448 512" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path></svg>
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle>Deseja excluir o usuário?</DialogTitle>
+                </DialogHeader>
+                <div className='flex w-full justify-between'>
+                  <DialogClose asChild>
+                    <Button type="button" variant="secondary">
+                      Fechar
+                    </Button>
+                  </DialogClose>
+                  <Button onClick={() => { deletePatient(row.original.id) }}>Confirmar</Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+
+
           </div>
         )
       },
@@ -81,7 +126,7 @@ export default function PacientesTable({ data }) {
   const [columnFilters, setColumnFilters] = useState([])
 
   const table = useReactTable({
-    data: tableData,
+    data: data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -106,7 +151,7 @@ export default function PacientesTable({ data }) {
                 <Button onClick={toggleModal}>Adicionar Paciente</Button>
               </DialogTrigger>
               <DialogContent style={{ height: '90vh' }}>
-                <DadosPacienteForm toggleModal={toggleModal} />
+                <DadosPacienteForm toggleModal={toggleModal} fetchData={fetchData} />
               </DialogContent>
             </Dialog>
           </H2>

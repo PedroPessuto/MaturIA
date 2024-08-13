@@ -1,14 +1,13 @@
 import { NextResponse } from 'next/server'
 
-export async function handler(req) {
+export async function handler (req) {
   try {
-    const newPatient = await req.json()
+    const patientId = await req.json()
 
-    const response = await fetch('http://localhost:3000/pacientes', {
-      method: 'POST',
+    const response = await fetch(`http://localhost:3000/pacientes/${patientId}`, {
+      method: 'DELETE',
       cache: 'no-store',
-      body: JSON.stringify(newPatient),
-    })
+    })  
 
     if (!response.ok) {
       return NextResponse.json({ error: response.statusText }, { status: response.status })
@@ -22,4 +21,5 @@ export async function handler(req) {
   }
 }
 
-export { handler as POST }
+export { handler as DELETE }
+
