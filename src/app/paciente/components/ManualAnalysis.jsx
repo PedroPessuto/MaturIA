@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/dialog'
 import { Small } from '@/components/custom/typo/Small'
 
-export function ManualAnalysis({ toogleIaModal, paciente }) {
+export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
   const router = useRouter()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
@@ -142,7 +142,7 @@ export function ManualAnalysis({ toogleIaModal, paciente }) {
     let totalRUS = 0
 
     for (let i = 0; i < Object.keys(selecionados).length; i++) {
-      const x = values[partes[`${i}`]][letras[selecionados[`${i}`]]][paciente['sexoBiologico']]
+      const x = values[partes[`${i}`]][letras[selecionados[`${i}`]]][sexoBiologico]
       totalTW2 += x['TW2']
       totalRUS += x['RUS']
     }
@@ -265,7 +265,7 @@ export function ManualAnalysis({ toogleIaModal, paciente }) {
               </div>
               <div className="w-full sm:w-1/3 h-full flex">
                 <Image
-                  src={'/teste.jpg'}
+                  src={decodeURIComponent(item.imageBase64)}
                   alt={'Imagem Para Comparação'}
                   width={100}
                   height={100}

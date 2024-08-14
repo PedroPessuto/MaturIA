@@ -22,8 +22,7 @@ import {
 } from '@/components/ui/select'
 import { P } from '../typo/P'
 
-export function DadosPacienteForm({ toggleModal, fetchData, patientId }) {
-  const { toast } = useToast()
+export function DadosPacienteForm({ toggleModal, fetchData, patient }) {
   const [paciente, setPaciente] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -63,56 +62,40 @@ export function DadosPacienteForm({ toggleModal, fetchData, patientId }) {
     }
   })
 
-  const getPatient = useCallback(async () => {
-    try {
-      const response = await fetch(`/api/patients/getOne/?id=${patientId}`, {
-        method: 'GET',
-        cache: 'no-store',
-      })
 
-      const patient = await response.json()
-      return patient.result
+  // useEffect(() => {
+  //   async function fetchPatient() {
+  //     if (!patient) {
+  //       return
+  //     }
 
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        description: `Erro ao buscar por paciente: ${error.message}`,
-      })
-    }
-  }, [patientId, toast])
+  //     setIsLoading(true)
 
-  useEffect(() => {
-    async function fetchPatient() {
-      if (!patientId) {
-        return
-      }
+  //     try {
+  //       // const patient = await getPatient()
+  //       // setPatient(patient)
+  //       if (patient) {
+  //         form.setValue('nome', patient.nome)
+  //         form.setValue('peso', `${patient.peso}`)
+  //         form.setValue('altura', `${patient.altura}`)
+  //         form.setValue('ano', `${patient.ano}`)
+  //         form.setValue('mes', `${patient.mes}`)
+  //         form.setValue('dia', `${patient.dia}`)
+  //         form.setValue('sexoBiologico', patient.sexoBiologico)
+  //         form.setValue('comorbidades', patient.comorbidades)
+  //       }
+  //     } catch (error) {
+  //       toast({
+  //         variant: 'destructive',
+  //         description: `Erro ao buscar por paciente: ${error.message}`,
+  //       })
+  //     } finally {
+  //       setIsLoading(false)
+  //     }
+  //   }
 
-      setIsLoading(true)
-
-      try {
-        const patient = await getPatient()
-        if (patient) {
-          form.setValue('nome', patient.nome)
-          form.setValue('peso', `${patient.peso}`)
-          form.setValue('altura', `${patient.altura}`)
-          form.setValue('ano', `${patient.ano}`)
-          form.setValue('mes', `${patient.mes}`)
-          form.setValue('dia', `${patient.dia}`)
-          form.setValue('sexoBiologico', patient.sexoBiologico)
-          form.setValue('comorbidades', patient.comorbidades)
-        }
-      } catch (error) {
-        toast({
-          variant: 'destructive',
-          description: `Erro ao buscar por paciente: ${error.message}`,
-        })
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchPatient()
-  }, [patientId, getPatient, form, toast])
+  //   fetchPatient()
+  // }, [form, toast])
 
   async function addPatient(newPatient) {
     try {

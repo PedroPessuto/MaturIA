@@ -24,7 +24,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { ManualAnalysis } from './ManualAnalysis'
 import { useToast } from '@/components/ui/use-toast'
 
-export function AnalysisScreen({ patientId }) {
+export function AnalysisScreen({ patient }) {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -69,11 +69,10 @@ export function AnalysisScreen({ patientId }) {
     setShowIaModal(!showIaModal)
   }
 
-
   const getAnalysis = useCallback(async () => {
     try {
       setIsLoading(true)
-      const response = await fetch(`/api/analysis/get/?id=${patientId}`, {
+      const response = await fetch(`/api/analysis/get/?id=${patient.patientId}`, {
         method: 'GET',
         cache: 'no-store',
       })
@@ -89,15 +88,15 @@ export function AnalysisScreen({ patientId }) {
     } finally {
       setIsLoading(false)
     }
-  }, [patientId, toast])
+  }, [patient, toast])
 
   useEffect(() => {
-    if (!patientId) {
+    if (!patient.patientId) {
       return
     }
 
     getAnalysis()
-  }, [patientId, getAnalysis])
+  }, [patient, getAnalysis])
 
   return (
     <>
@@ -114,7 +113,7 @@ export function AnalysisScreen({ patientId }) {
               </DialogHeader>
               <div className="flex items-center space-x-2">
                 <div className="grid flex-1 gap-2">
-                  {!isLoading && <AnalysisForm patientId={patientId} getAnalysis={getAnalysis} toogleModal={toogleModal} />}
+                  {!isLoading && <AnalysisForm patientId={patient.id} getAnalysis={getAnalysis} toogleModal={toogleModal} />}
                 </div>
               </div>
             </DialogContent>
@@ -127,7 +126,6 @@ export function AnalysisScreen({ patientId }) {
           <Card key={index}>
             <div className='flex gap-4 flex-col md:flex-row w-full'>
               <div className='relative flex w-full md:w-3/5 justify-center items-center bg-neutral-100'>
-
                 <Image
                   src={decodeURIComponent(item.imageBase64)}
                   alt="Descrição da Imagem"
@@ -172,7 +170,7 @@ export function AnalysisScreen({ patientId }) {
                         <Button onClick={toogleIaModal}>Análise Manual</Button>
                       </DialogTrigger>
                       <DialogContent className="max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl" style={{ height: '90vh' }}>
-                        <ManualAnalysis toogleIaModal={toogleIaModal} paciente={patientId} />
+                        <ManualAnalysis  toogleIaModal={toogleIaModal} pacienteId={patient.patientId} sexoBiologico={patient.sexoBiologico} />
                       </DialogContent>
                     </Dialog>
                   </div>
