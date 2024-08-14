@@ -33,6 +33,7 @@ import {
 } from '@/components/ui/dialog'
 import { DialogClose } from '@radix-ui/react-dialog'
 
+
 export default function PacientesTable({ data, fetchData }) {
   const [showModal, setShowModal] = useState(false)
   const { toast } = useToast()
@@ -89,7 +90,7 @@ export default function PacientesTable({ data, fetchData }) {
       cell: ({ row }) => {
         return (
           <div className='flex gap-3'>
-            <Link href={`/paciente/${row.original.id}`}>
+            <Link href={`/paciente/?id=${row.original.id}`}>
               <Button type="submit">
                 <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1rem" width="1rem" xmlns="http://www.w3.org/2000/svg"><path d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"></path></svg>
               </Button>
@@ -110,7 +111,7 @@ export default function PacientesTable({ data, fetchData }) {
                       Fechar
                     </Button>
                   </DialogClose>
-                  <Button onClick={() => { deletePatient(row.original.id) }}>Confirmar</Button>
+                  <Button className="bg-red-600 hover:bg-red-900" onClick={() => { deletePatient(row.original.id) }}>Confirmar</Button>
                 </div>
               </DialogContent>
             </Dialog>

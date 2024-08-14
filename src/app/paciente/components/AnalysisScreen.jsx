@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Small } from '../../../../components/custom/typo/Small'
+import { Small } from '@/components/custom/typo/Small'
 import Image from 'next/image'
 import {
   Dialog,
@@ -20,19 +20,38 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { AnalysisForm } from './NewAnalysis'
-import { useState } from 'react'
-import { AnaliseIaForm } from './ManualAnalysis'
+import { useCallback, useEffect, useState } from 'react'
+import { ManualAnalysis } from './ManualAnalysis'
+import { useToast } from '@/components/ui/use-toast'
 
-export function AnalysisScreen({ analysis, paciente }) {
+export function AnalysisScreen({ patientId }) {
+  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false)
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString)
+  const formatDate = (timestamp) => {
+    const date = new Date(parseInt(timestamp))
     const day = date.getDate().toString().padStart(2, '0')
     const month = (date.getMonth() + 1).toString().padStart(2, '0')
     const year = date.getFullYear()
     return `${day}/${month}/${year}`
   }
+
+  const formatAge = (timestamp) => {
+    const now = new Date()
+    const date = new Date(parseInt(timestamp))
+    let years = now.getFullYear() - date.getFullYear()
+    let months = now.getMonth() - date.getMonth()
+
+    if (months < 0) {
+      years--
+      months += 12
+    }
+
+    return `${years} anos e ${months} meses`
+  }
+
   const [showModal, setShowModal] = useState(false)
+  const [analysis, setAnalysis] = useState([])
 
   const toogleModal = () => {
     setShowModal(!showModal)
@@ -51,6 +70,35 @@ export function AnalysisScreen({ analysis, paciente }) {
   }
 
 
+  const getAnalysis = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      const response = await fetch(`/api/analysis/get/?id=${patientId}`, {
+        method: 'GET',
+        cache: 'no-store',
+      })
+
+      const analysis = await response.json()
+      setAnalysis(analysis.result)
+      
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        description: `Erro ao buscar por paciente: ${error.message}`,
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }, [patientId, toast])
+
+  useEffect(() => {
+    if (!patientId) {
+      return
+    }
+
+    getAnalysis()
+  }, [patientId, getAnalysis])
+
   return (
     <>
       <H2 className="mb-8">
@@ -66,7 +114,7 @@ export function AnalysisScreen({ analysis, paciente }) {
               </DialogHeader>
               <div className="flex items-center space-x-2">
                 <div className="grid flex-1 gap-2">
-                  <AnalysisForm toogleModal={toogleModal} />
+                  {!isLoading && <AnalysisForm patientId={patientId} getAnalysis={getAnalysis} toogleModal={toogleModal} />}
                 </div>
               </div>
             </DialogContent>
@@ -75,18 +123,17 @@ export function AnalysisScreen({ analysis, paciente }) {
       </H2>
 
       <div className='flex flex-col gap-10'>
-        {analysis.map((item, index) => (
+        {!isLoading && analysis.reverse().map((item, index) => (
           <Card key={index}>
             <div className='flex gap-4 flex-col md:flex-row w-full'>
-              <div className='relative flex w-full md:w-1/2 justify-center items-center' style={{ height: '100%' }}>
+              <div className='relative flex w-full md:w-3/5 justify-center items-center bg-neutral-100'>
+
                 <Image
-                  src="/teste.jpg"
+                  src={decodeURIComponent(item.imageBase64)}
                   alt="Descrição da Imagem"
-                  width={500}
-                  height={400}
-                  layout="responsive"
-                  objectFit="cover"
-                  className="w-full h-full rounded-l-lg"
+                  fill
+                  className="w-full h-full absolute rounded-l-lg"
+                  unoptimized
                 />
               </div>
               <div className='w-full md:w-1/2'>
@@ -95,7 +142,7 @@ export function AnalysisScreen({ analysis, paciente }) {
                   <CardDescription>
                     <Small>
                       {
-                        `Radiografia realizada em: ${formatDate(item.createdAt)}`
+                        `Radiografia realizada em: ${formatDate(item.doneAt)}`
                       }
                     </Small>
                   </CardDescription>
@@ -105,14 +152,14 @@ export function AnalysisScreen({ analysis, paciente }) {
                     <Large>Idade óssea por IA</Large>
                     <Small>
                       {
-                        item.iaAno == null ? 'Não feita' : <> {`${item.iaAno} anos ${item.iaMes} meses`}</>
+                        item.iaAge === undefined ? 'Não feita' : `${formatAge(item.iaAge)}`
                       }
                     </Small>
 
                     <Large>Idade óssea por análise manual</Large>
                     <Small>
                       {
-                        item.iaAno == null ? 'Não feita' : <> {`${item.manualAno} anos ${item.manualMes} meses`}</>
+                        item.manualAge === undefined ? 'Não feita' : `${formatAge(item.manualAge)}`
                       }
                     </Small>
                   </div>
@@ -124,18 +171,21 @@ export function AnalysisScreen({ analysis, paciente }) {
                       <DialogTrigger asChild>
                         <Button onClick={toogleIaModal}>Análise Manual</Button>
                       </DialogTrigger>
-                      <DialogContent className="max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl" style={{ height: '100vh' }}>
-                        <AnaliseIaForm toogleIaModal={toogleIaModal} paciente={paciente} />
+                      <DialogContent className="max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl" style={{ height: '90vh' }}>
+                        <ManualAnalysis toogleIaModal={toogleIaModal} paciente={patientId} />
                       </DialogContent>
                     </Dialog>
                   </div>
                 </CardFooter>
-                      
+
               </div>
             </div>
           </Card >
 
         ))
+        }
+        {
+          !isLoading && analysis.length === 0 && <><Small>Nenhuma análise feita</Small></>
         }
       </div >
     </>

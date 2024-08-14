@@ -59,6 +59,7 @@ export default function Page() {
 
           <PacientesTable data={data} fetchData={fetchData} />
         </>}
+        
       </div>
     </main>
   )

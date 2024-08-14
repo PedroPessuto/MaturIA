@@ -21,14 +21,13 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-export function AnalysisForm({ toogleModal }) {
+export function AnalysisForm({ getAnalysis, toogleModal, patientId }) {
   const router = useRouter()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [imagePreview, setImagePreview] = useState(null)
 
   const date = new Date()
-
 
   const month = date.getMonth() + 1
   const currentYear = date.getFullYear().toString()
@@ -68,7 +67,12 @@ export function AnalysisForm({ toogleModal }) {
     }
   }
 
-  const onSubmit = (data) => {
+  const combineDateToTimestamp = (year, month, day) => {
+    const date = new Date(year, month - 1, day)
+    return date.getTime()
+  }
+
+  const onSubmit = async (data) => {
     if (!data.imageBase64) {
       toast({
         description: 'Envie uma imagem antes de enviar.',
@@ -77,15 +81,38 @@ export function AnalysisForm({ toogleModal }) {
       return
     }
 
-    console.log(data)
+    const timestamp = combineDateToTimestamp(data.ano, data.mes, data.dia)
+    
+    const payload = {
+      imageBase64: data.imageBase64,
+      doneAt: timestamp,
+      patientId: patientId
+    }
+
     setIsLoading(true)
 
-    setIsLoading(false)
-    toast({
-      description: 'Imagem enviada com sucesso!',
-    })
-    router.refresh()
-    toogleModal()
+    try {
+      const response = await fetch('/api/analysis/create', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao enviar a análise')
+      }
+
+      await getAnalysis()
+      
+      toogleModal()
+    } catch (error) {
+      console.log()
+      toast({
+        description: error.message,
+        status: 'error',
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -129,7 +156,7 @@ export function AnalysisForm({ toogleModal }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Dia</FormLabel>
-                  <Select onValueChange={field.onValueChange}>
+                  <Select onValueChange={field.onChange} defaultValue={currentDay}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={currentDay} />
@@ -152,7 +179,7 @@ export function AnalysisForm({ toogleModal }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Mês</FormLabel>
-                  <Select onValueChange={field.onValueChange}>
+                  <Select onValueChange={field.onChange} defaultValue={currentMonth}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={currentMonth} />
@@ -175,7 +202,7 @@ export function AnalysisForm({ toogleModal }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Ano</FormLabel>
-                  <Select onValueChange={field.onValueChange}>
+                  <Select onValueChange={field.onChange} defaultValue={currentYear}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={currentYear} />

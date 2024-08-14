@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/dialog'
 import { Small } from '@/components/custom/typo/Small'
 
-export function AnaliseIaForm({ toogleIaModal, paciente }) {
+export function ManualAnalysis({ toogleIaModal, paciente }) {
   const router = useRouter()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
@@ -37,6 +37,7 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
 
   const values = {
     radio: {
+      'A': { Masculino: { TW2: 0, RUS: 0 }, Feminino: { TW2: 0, RUS: 0 } },
       'B': { Masculino: { TW2: 15, RUS: 16 }, Feminino: { TW2: 17, RUS: 23 } },
       'C': { Masculino: { TW2: 17, RUS: 21 }, Feminino: { TW2: 19, RUS: 30 } },
       'D': { Masculino: { TW2: 21, RUS: 30 }, Feminino: { TW2: 25, RUS: 44 } },
@@ -47,6 +48,7 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
       'I': { Masculino: { TW2: 106, RUS: 213 }, Feminino: { TW2: 106, RUS: 218 } }
     },
     ulna: {
+      'A': { Masculino: { TW2: 0, RUS: 0 }, Feminino: { TW2: 0, RUS: 0 } },
       'B': { Masculino: { TW2: 22, RUS: 27 }, Feminino: { TW2: 22, RUS: 30 } },
       'C': { Masculino: { TW2: 26, RUS: 30 }, Feminino: { TW2: 26, RUS: 33 } },
       'D': { Masculino: { TW2: 30, RUS: 32 }, Feminino: { TW2: 30, RUS: 37 } },
@@ -63,6 +65,7 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
       parte: 'radio',
       descricao: 'Selecione o RADIO correspondente',
       imagensRaiox: [
+        { nome: 'A', caminho: '/None.svg' },
         { nome: 'B', caminho: '/xray/radio/Radio-B.png' },
         { nome: 'C', caminho: '/xray/radio/Radio-C.png' },
         { nome: 'D', caminho: '/xray/radio/Radio-D.png' },
@@ -73,6 +76,7 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
         { nome: 'I', caminho: '/xray/radio/Radio-I.png' }
       ],
       imagensDesenho: [
+        { nome: 'A', caminho: '/None.svg' },
         { nome: 'B', caminho: '/xray/radio/Radio-B-Desenho.png' },
         { nome: 'C', caminho: '/xray/radio/Radio-C-Desenho.png' },
         { nome: 'D', caminho: '/xray/radio/Radio-D-Desenho.png' },
@@ -88,6 +92,7 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
       parte: 'ulna',
       descricao: 'Selecione o ULNA correspondente',
       imagensRaiox: [
+
         { nome: 'B', caminho: '/xray/ulna/ulna-B.png' },
         { nome: 'C', caminho: '/xray/ulna/ulna-C.png' },
         { nome: 'D', caminho: '/xray/ulna/ulna-D.png' },
@@ -166,21 +171,58 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
   }
 
   return (
-    <div className="flex-col flex h-full w-full gap-8 overflow-y-auto">
-      <div className="w-full h-full flex flex-col justify-between gap-4">
-        {
-          currentStep !== steps.length && <>
+    <div className="flex-col flex h-full w-full  overflow-y-auto overflow-x-hidden">
+      <div className="w-full h-full flex flex-col gap-4">
+        {currentStep !== steps.length && (
+          <>
             <H2 className="break-words">{steps[currentStep].name}</H2>
             <H4 className="break-words">{steps[currentStep].descricao}</H4>
-            <div className="flex-col flex sm:flex-row h-full w-full gap-8 overflow-y-auto">
+            <div className="flex-col flex sm:flex-row  w-full gap-8">
               <div className="w-full sm:w-2/3">
                 <Tabs defaultValue={viewType} onValueChange={handleViewTypeChange}>
+                  <div className='flex w-full justify-center '>
+                    <div className="flex w-full justify-between">
+                      {currentStep !== 0 && (
+                        <Button onClick={handlePreviousStep} disabled={isLoading}>
+                          Anterior
+                        </Button>
+                      )}
+                    </div>
+
+                    <TabsList>
+                      <TabsTrigger value="raiox">Raio-X</TabsTrigger>
+                      <TabsTrigger value="desenho">Desenho</TabsTrigger>
+                    </TabsList>
+
+                    <div className="flex w-full justify-end">
+                      {currentStep === steps.length - 1 ? (
+                        <Dialog open={showConfirmModal} onOpenChange={() => { setShowConfirmModal(!showConfirmModal) }}>
+                          <DialogTrigger>
+                            <Button disabled={isDisabledConfirmModal}>Finalizar</Button>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Deseja finalizar o teste?</DialogTitle>
+                            </DialogHeader>
+                            <div className='flex w-full justify-between'>
+                              <Button onClick={() => { setShowConfirmModal(!showConfirmModal) }} variant="secondary">Cancelar</Button>
+                              <Button onClick={() => { handleSubmit() }}>Confirmar</Button>
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      ) : (
+                        <Button onClick={handleNextStep} disabled={selecionados[currentStep] === undefined || isLoading}>
+                          Próximo
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                   <TabsContent value="raiox">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 h-full">
                       {steps[currentStep].imagensRaiox.map((image, index) => (
                         <div
                           key={index}
-                          className={`relative flex flex-col items-center justify-between cursor-pointer h-full rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-blue-500' : 'border-neutral-200'}`}
+                          className={`relative flex flex-col items-center justify-between h-full rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-blue-500' : 'border-neutral-200'}`}
                           onClick={() => handleSelectImage(currentStep, index)}
                         >
                           <Image
@@ -188,8 +230,6 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
                             alt={image.nome}
                             width={100}
                             height={100}
-                            layout="responsive"
-                            objectFit="cover"
                             className="w-full h-full rounded-t-lg"
                           />
                           <button className={`w-full p-2 font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
@@ -200,7 +240,7 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
                     </div>
                   </TabsContent>
                   <TabsContent value="desenho">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                       {steps[currentStep].imagensDesenho.map((image, index) => (
                         <div
                           key={index}
@@ -212,8 +252,6 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
                             alt={image.nome}
                             width={100}
                             height={100}
-                            layout="responsive"
-                            objectFit="cover"
                             className="w-full h-full rounded-t-lg"
                           />
                           <button className={`w-full p-2 font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
@@ -223,87 +261,39 @@ export function AnaliseIaForm({ toogleIaModal, paciente }) {
                       ))}
                     </div>
                   </TabsContent>
-                  <div className='flex w-full justify-center mt-8'>
-                    <TabsList>
-                      <TabsTrigger value="raiox">Raio-X</TabsTrigger>
-                      <TabsTrigger value="desenho">Desenho</TabsTrigger>
-                    </TabsList>
-                  </div>
                 </Tabs>
               </div>
-              <div className="w-full sm:w-1/3 flex">
+              <div className="w-full sm:w-1/3 h-full flex">
                 <Image
                   src={'/teste.jpg'}
                   alt={'Imagem Para Comparação'}
                   width={100}
                   height={100}
-                  layout="responsive"
-                  objectFit="cover"
-                  className="w-full h-full rounded-lg"
+                  className="w-full h-fit rounded-lg"
                 />
               </div>
             </div>
-
-            <div className="flex mt-4">
-              <div className="flex w-full">
-                {currentStep !== 0 && (
-                  <Button onClick={handlePreviousStep} disabled={isLoading}>
-                    Anterior
-                  </Button>
-                )}
-              </div>
-              <div className="flex w-full justify-end">
-                {
-                  currentStep === steps.length - 1 ? <>
-                    <Dialog open={showConfirmModal} onOpenChange={() => { setShowConfirmModal(!showConfirmModal) }}>
-                      <DialogTrigger>
-                        <Button disabled={isDisabledConfirmModal} >Finalizar</Button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Deseja finalizar o teste?</DialogTitle>
-                        </DialogHeader>
-                        <div className='flex w-full justify-between'>
-                          <Button onClick={() => { setShowConfirmModal(!showConfirmModal) }} variant="secondary">Cancelar</Button>
-                          <Button onClick={() => { handleSubmit() }}>Confirmar</Button>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  </> :
-                    <>
-                      <Button onClick={handleNextStep} disabled={selecionados[currentStep] === undefined || isLoading}>
-                        Próximo
-                      </Button>
-                    </>
-                }
-              </div>
-            </div>
-
           </>
-        }
-        {/* Final */}
-        {
-          currentStep === steps.length && <>
+        )}
+        {currentStep === steps.length && (
+          <>
             <H2 className="break-words">Resultado</H2>
             <div className='flex flex-col gap-8 w-full h-full justify-center items-center'>
               <H4>O resultado da análise</H4>
-              <div className='flex items-center gap-12  '>
-                {
-                  tipos.map((item, index) => (<>
-                    <div className='flex flex-col justify-center items-center'>
-                      <Small>{item}</Small>
-                      <h3 key={index} className="italic text-6xl">{ages[tipos[index]]}</h3>
-                    </div>
-                  </>
-                  ))
-                }
+              <div className='flex items-center gap-12'>
+                {tipos.map((item, index) => (
+                  <div key={index} className='flex flex-col justify-center items-center'>
+                    <Small>{item}</Small>
+                    <h3 className="italic text-6xl">{ages[tipos[index]]}</h3>
+                  </div>
+                ))}
               </div>
               <Button onClick={() => { toogleIaModal() }}>Retornar</Button>
             </div>
           </>
-        }
-
+        )}
       </div>
     </div>
   )
+
 }

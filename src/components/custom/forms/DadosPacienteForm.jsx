@@ -9,9 +9,10 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useToast } from '@/components/ui/use-toast'
 import { Textarea } from '@/components/ui/textarea'
+
 import {
   Select,
   SelectContent,
@@ -19,12 +20,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { P } from '../typo/P'
 
-export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
-
-  const router = useRouter()
+export function DadosPacienteForm({ toggleModal, fetchData, patientId }) {
   const { toast } = useToast()
-
+  const [paciente, setPaciente] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
 
   const date = new Date()
@@ -40,11 +40,11 @@ export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
 
   const formSchema = z.object({
     nome: z.string().min(3, { message: 'Nome precisa ter no mínimo 3 caracteres' }),
-    peso: z.string().regex(/^\d+(\.\d+)?$/, 'Peso deve ser um número').transform(Number),
-    altura: z.string().regex(/^\d+(\.\d+)?$/, 'Altura deve ser um número').transform(Number),
-    ano: z.string().min(4, { message: 'Ano é obrigatório' }),
-    mes: z.string().min(1, { message: 'Mês é obrigatório' }),
-    dia: z.string().min(1, { message: 'Dia é obrigatório' }),
+    peso: z.string().transform(String),
+    altura: z.string().transform(String),
+    ano: z.string().min(4, { message: 'Ano é obrigatório' }).transform(String),
+    mes: z.string().min(1, { message: 'Mês é obrigatório' }).transform(String),
+    dia: z.string().min(1, { message: 'Dia é obrigatório' }).transform(String),
     sexoBiologico: z.string({ message: 'Selecione um sexo biológico' }),
     comorbidades: z.string().optional(),
   })
@@ -52,66 +52,131 @@ export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nome: paciente != null ? paciente.nome : '',
-      peso: paciente != null ? paciente.peso : '',
-      altura: paciente != null ? paciente.altura : '',
-      ano: paciente != null ? paciente.ano : currentYear,
-      mes: paciente != null ? paciente.mes : currentMonth,
-      dia: paciente != null ? paciente.dia : currentDay,
-      sexoBiologico: paciente != null ? paciente.sexoBiologico : 'Feminino',
-      comorbidades: paciente != null ? paciente.comorbidades : ''
+      nome: '',
+      peso: '',
+      altura: '',
+      ano: `${currentYear}`,
+      mes: `${currentMonth}`,
+      dia: `${currentDay}`,
+      sexoBiologico: 'Feminino',
+      comorbidades: ''
     }
   })
 
+  const getPatient = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/patients/getOne/?id=${patientId}`, {
+        method: 'GET',
+        cache: 'no-store',
+      })
+
+      const patient = await response.json()
+      return patient.result
+
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        description: `Erro ao buscar por paciente: ${error.message}`,
+      })
+    }
+  }, [patientId, toast])
+
+  useEffect(() => {
+    async function fetchPatient() {
+      if (!patientId) {
+        return
+      }
+
+      setIsLoading(true)
+
+      try {
+        const patient = await getPatient()
+        if (patient) {
+          form.setValue('nome', patient.nome)
+          form.setValue('peso', `${patient.peso}`)
+          form.setValue('altura', `${patient.altura}`)
+          form.setValue('ano', `${patient.ano}`)
+          form.setValue('mes', `${patient.mes}`)
+          form.setValue('dia', `${patient.dia}`)
+          form.setValue('sexoBiologico', patient.sexoBiologico)
+          form.setValue('comorbidades', patient.comorbidades)
+        }
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          description: `Erro ao buscar por paciente: ${error.message}`,
+        })
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchPatient()
+  }, [patientId, getPatient, form, toast])
+
   async function addPatient(newPatient) {
     try {
-      await fetch('/api/patients/add', {
+      await fetch('/api/patients/create', {
         method: 'POST',
         cache: 'no-store',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify(newPatient),
       })
-      toggleModal()
-      await fetchData()
-      
+
       toast({
         description: 'Paciente Adicionado Com Sucesso',
+      })
+
+      fetchData()
+      toggleModal()
+
+    }
+    catch (error) {
+      toast({
+        variant: 'destructive',
+        description: `Erro ao adicionar paciente: ${error.message}`,
+      })
+    }
+  }
+
+  async function updatePatient(newPatient) {
+    try {
+      let completePatient = { ...newPatient, id: patientId }
+     
+      await fetch(`/api/patients/update/?id=${patientId}`, {
+        method: 'PUT',
+        cache: 'no-store',
+        body: JSON.stringify(completePatient),
+      })
+
+      toast({
+        description: 'Dados Atualizados Com Sucesso',
       })
 
     } catch (error) {
       toast({
         variant: 'destructive',
-        description: `Erro ao adicionar paciente: ${error.message}`,
-      })
-    } 
-  }
-
-
-  function onSubmit(data) {
-
-    setIsLoading(true)
-
-    if (paciente != null) {
-      router.refresh()
-      toast({
-        description: 'Dados atualizado com sucesso',
+        description: `Erro ao atualizar paciente: ${error.message}`,
       })
     }
-    else {
+  }
+
+  function onSubmit(data) {
+    setIsLoading(true)
+
+    if (patientId != null) {
+      updatePatient(data)
+    } else {
       addPatient(data)
     }
 
     setIsLoading(false)
   }
 
-
   return (
     <div className='w-full overflow-y-auto px-2'>
       <H2 className="mb-8">{paciente != null ? 'Dados do Paciente' : 'Cadastro de Paciente'}</H2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit) } className="space-y-6 ">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 ">
           <FormField
             control={form.control}
             name="nome"
@@ -158,7 +223,7 @@ export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Sexo Biológico</FormLabel>
-                <Select onValueChange={field.onValueChange}>
+                <Select value={field.value} onValueChange={field.onChange}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Feminino" />
@@ -182,7 +247,7 @@ export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Dia</FormLabel>
-                  <Select onValueChange={field.onValueChange}>
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={paciente != null ? paciente.dia : currentDay} />
@@ -205,7 +270,7 @@ export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Mês</FormLabel>
-                  <Select onValueChange={field.onValueChange}>
+                  <Select value={field.value}  onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={paciente != null ? paciente.mes : currentMonth} />
@@ -228,7 +293,7 @@ export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Ano</FormLabel>
-                  <Select onValueChange={field.onValueChange}>
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder={paciente != null ? paciente.ano : currentYear} />
@@ -244,7 +309,6 @@ export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
                 </FormItem>
               )}
             />
-
           </div>
 
           <FormField
@@ -254,31 +318,17 @@ export function DadosPacienteForm({ toggleModal, fetchData, paciente }) {
               <FormItem>
                 <FormLabel>Comorbidades</FormLabel>
                 <FormControl>
-                  <Textarea
-                    placeholder="Escreva as comorbidades aqui..."
-                    className="resize-none"
-                    {...field}
-                  />
+                  <Textarea placeholder="Separe as comorbidades por vírgula" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          {
-            isLoading && <>
-              <Button disabled className="w-full">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              </Button>
-            </>
-          }
-          {
-            !isLoading &&
-            <Button type="submit" className="w-full">{paciente != null ? 'Salvar' : 'Cadastrar'}</Button>
-          }
-
+          <Button type="submit" className='w-full'><Coins className="mr-2 h-4 w-4" /> Salvar</Button>
         </form>
       </Form>
     </div>
   )
 }
+    
