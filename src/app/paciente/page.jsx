@@ -21,10 +21,9 @@ export default function Page() {
   const patientId = searchParams.get('id')
   const [patient, setPatient] = useState()
 
-
   const getPatient = useCallback(async () => {
     try {
-      const response = await fetch(`/api/patients/getOne/?id=${patient.patientId}`, {
+      const response = await fetch(`/api/patients/getOne/?id=${patientId}`, {
         method: 'GET',
         cache: 'no-store',
       })
@@ -38,16 +37,14 @@ export default function Page() {
         description: `Erro ao buscar por paciente: ${error.message}`,
       })
     }
-  }, [toast])
-
+  }, [patientId, toast])
 
   useEffect(() => {
     async function fetchPatient() {
-      setIsLoading(true)
 
       try {
-        const patient = await getPatient()
-        setPatient(patient)
+        const newPatient = await getPatient()
+        setPatient(newPatient)
 
       }
       catch (error) {
@@ -56,9 +53,7 @@ export default function Page() {
           description: `Erro ao buscar por paciente: ${error.message}`,
         })
       }
-      finally {
-        setIsLoading(false)
-      }
+
     }
 
     fetchPatient()
@@ -85,10 +80,15 @@ export default function Page() {
           </Breadcrumb>
           <div className="flex w-full gap-5 md:gap-20 flex-col lg:flex-row">
             <div className="w-full">
-              <DadosPacienteForm patientId={patientId} setPatient={setPatient} />
+              {
+                patient && <DadosPacienteForm patient={patient} />
+              }
             </div>
             <div className="w-full">
-              <AnalysisScreen patientId={patientId} patient={patient} />
+              {
+                patient && <AnalysisScreen patient={patient} />
+              }
+
             </div>
           </div>
         </div>

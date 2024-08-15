@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-export function AnalysisForm({ getAnalysis, toogleModal, patientId }) {
+export function NewAnalysis({ getAnalysis, toogleModal, patientId }) {
   const router = useRouter()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)

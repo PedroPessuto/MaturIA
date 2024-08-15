@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState } from 'react'
@@ -19,7 +20,7 @@ import {
 } from '@/components/ui/dialog'
 import { Small } from '@/components/custom/typo/Small'
 
-export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
+export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
   const router = useRouter()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
@@ -34,6 +35,25 @@ export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
 
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [isDisabledConfirmModal, setIsDisabledConfirmModal] = useState(true)
+
+  const agesTable = {
+    'meninos': {
+      'table A1': {
+        '26': 1.6,
+        '32': 1.7,
+        '38': 1.8,
+        '43': 1.9,
+        '49': 2,
+        '55': 2.1,
+        '61': 2.2,
+        '65': 2.3,
+        '98': 3,
+        '101': 3.1,
+        '132': 4
+
+      }
+    }
+  }
 
   const values = {
     radio: {
@@ -142,7 +162,7 @@ export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
     let totalRUS = 0
 
     for (let i = 0; i < Object.keys(selecionados).length; i++) {
-      const x = values[partes[`${i}`]][letras[selecionados[`${i}`]]][sexoBiologico]
+      const x = values[partes[`${i}`]][letras[selecionados[`${i}`]]][patient.sexoBiologico]
       totalTW2 += x['TW2']
       totalRUS += x['RUS']
     }
@@ -170,17 +190,57 @@ export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
     }
   }
 
+  const ZoomImage = ({ src, alt, width, height }) => {
+    const [zoom, setZoom] = useState(false)
+    const [offset, setOffset] = useState({ x: 0, y: 0 })
+
+    const handleMouseEnter = () => {
+      setZoom(true)
+    }
+
+    const handleMouseMove = (e) => {
+      const { left, top, width, height } = e.target.getBoundingClientRect()
+      const x = ((e.clientX - left) / width) * 100
+      const y = ((e.clientY - top) / height) * 100
+      setOffset({ x, y })
+    }
+
+    const handleMouseLeave = () => {
+      setZoom(false)
+      setOffset({ x: 0, y: 0 })
+    }
+
+    return (
+      <div
+        className="relative overflow-hidden rounded-lg w-full h-full"
+        onMouseEnter={handleMouseEnter}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className={`w-full h-full transition-transform duration-300 ${zoom ? 'scale-150' : 'scale-100'}`}
+          style={{ transformOrigin: `${offset.x}% ${offset.y}%` }}
+        />
+      </div>
+    )
+  }
+
+
   return (
-    <div className="flex-col flex h-full w-full  overflow-y-auto overflow-x-hidden">
+    <div className="flex-col flex h-full w-full overflow-y-auto overflow-x-hidden">
       <div className="w-full h-full flex flex-col gap-4">
         {currentStep !== steps.length && (
           <>
             <H2 className="break-words">{steps[currentStep].name}</H2>
             <H4 className="break-words">{steps[currentStep].descricao}</H4>
-            <div className="flex-col flex sm:flex-row  w-full gap-8">
+            <div className="flex-col flex sm:flex-row w-full gap-8">
               <div className="w-full sm:w-2/3">
                 <Tabs defaultValue={viewType} onValueChange={handleViewTypeChange}>
-                  <div className='flex w-full justify-center '>
+                  <div className='flex w-full justify-center'>
                     <div className="flex w-full justify-between">
                       {currentStep !== 0 && (
                         <Button onClick={handlePreviousStep} disabled={isLoading}>
@@ -219,7 +279,7 @@ export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
                   </div>
                   <TabsContent value="raiox">
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 h-full">
-                      {steps[currentStep].imagensRaiox.map((image, index) => (
+                    {steps[currentStep].imagensRaiox.map((image, index) => (
                         <div
                           key={index}
                           className={`relative flex flex-col items-center justify-between h-full rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-blue-500' : 'border-neutral-200'}`}
@@ -247,12 +307,11 @@ export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
                           className={`relative flex flex-col items-center justify-between h-full rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-blue-500' : 'border-neutral-200'}`}
                           onClick={() => handleSelectImage(currentStep, index)}
                         >
-                          <Image
+                          <ZoomImage
                             src={image.caminho}
                             alt={image.nome}
                             width={100}
                             height={100}
-                            className="w-full h-full rounded-t-lg"
                           />
                           <button className={`w-full p-2 font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
                             {selecionados[currentStep] === index ? 'Selecionado' : `Selecionar ${image.nome}`}
@@ -264,12 +323,11 @@ export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
                 </Tabs>
               </div>
               <div className="w-full sm:w-1/3 h-full flex">
-                <Image
-                  src={decodeURIComponent(item.imageBase64)}
+                <ZoomImage
+                  src={decodeURIComponent(analysis)}
                   alt={'Imagem Para Comparação'}
                   width={100}
                   height={100}
-                  className="w-full h-fit rounded-lg"
                 />
               </div>
             </div>
@@ -294,6 +352,7 @@ export function ManualAnalysis({ toogleIaModal, pacienteId, sexoBiologico }) {
         )}
       </div>
     </div>
+
   )
 
 }

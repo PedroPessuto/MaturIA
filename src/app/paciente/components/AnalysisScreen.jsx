@@ -19,7 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { AnalysisForm } from './NewAnalysis'
+import { NewAnalysis } from './NewAnalysis'
 import { useCallback, useEffect, useState } from 'react'
 import { ManualAnalysis } from './ManualAnalysis'
 import { useToast } from '@/components/ui/use-toast'
@@ -27,6 +27,8 @@ import { useToast } from '@/components/ui/use-toast'
 export function AnalysisScreen({ patient }) {
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
+  const [analysis, setAnalysis] = useState([])
+  const [selectedAnalysis, setSelectedAnalysis] = useState()
 
   const formatDate = (timestamp) => {
     const date = new Date(parseInt(timestamp))
@@ -51,20 +53,16 @@ export function AnalysisScreen({ patient }) {
   }
 
   const [showModal, setShowModal] = useState(false)
-  const [analysis, setAnalysis] = useState([])
-
   const toogleModal = () => {
     setShowModal(!showModal)
   }
 
   const [showManualModal, setShowManualModal] = useState(false)
-
   const toogleManualModal = () => {
     setShowManualModal(!showManualModal)
   }
 
   const [showIaModal, setShowIaModal] = useState(false)
-
   const toogleIaModal = () => {
     setShowIaModal(!showIaModal)
   }
@@ -72,14 +70,12 @@ export function AnalysisScreen({ patient }) {
   const getAnalysis = useCallback(async () => {
     try {
       setIsLoading(true)
-      const response = await fetch(`/api/analysis/get/?id=${patient.patientId}`, {
+      const response = await fetch(`/api/analysis/get/?id=${patient.id}`, {
         method: 'GET',
         cache: 'no-store',
       })
-
       const analysis = await response.json()
       setAnalysis(analysis.result)
-      
     } catch (error) {
       toast({
         variant: 'destructive',
@@ -91,11 +87,9 @@ export function AnalysisScreen({ patient }) {
   }, [patient, toast])
 
   useEffect(() => {
-    if (!patient.patientId) {
-      return
+    if (patient) {
+      getAnalysis()
     }
-
-    getAnalysis()
   }, [patient, getAnalysis])
 
   return (
@@ -113,7 +107,7 @@ export function AnalysisScreen({ patient }) {
               </DialogHeader>
               <div className="flex items-center space-x-2">
                 <div className="grid flex-1 gap-2">
-                  {!isLoading && <AnalysisForm patientId={patient.id} getAnalysis={getAnalysis} toogleModal={toogleModal} />}
+                  {!isLoading && patient && <NewAnalysis patientId={patient.id} getAnalysis={getAnalysis} toogleModal={toogleModal} />}
                 </div>
               </div>
             </DialogContent>
@@ -122,7 +116,7 @@ export function AnalysisScreen({ patient }) {
       </H2>
 
       <div className='flex flex-col gap-10'>
-        {!isLoading && analysis.reverse().map((item, index) => (
+        {!isLoading && analysis.slice().reverse().map((item, index) => (
           <Card key={index}>
             <div className='flex gap-4 flex-col md:flex-row w-full'>
               <div className='relative flex w-full md:w-3/5 justify-center items-center bg-neutral-100'>
@@ -136,7 +130,7 @@ export function AnalysisScreen({ patient }) {
               </div>
               <div className='w-full md:w-1/2'>
                 <CardHeader>
-                  <CardTitle>Análise #{index + 1}</CardTitle>
+                  <CardTitle>Análise #{analysis.length - index}</CardTitle>
                   <CardDescription>
                     <Small>
                       {
@@ -167,10 +161,12 @@ export function AnalysisScreen({ patient }) {
                   <div className='flex-col 2xl:flex-row flex gap-4 '>
                     <Dialog open={showIaModal} onOpenChange={toogleIaModal}>
                       <DialogTrigger asChild>
-                        <Button onClick={toogleIaModal}>Análise Manual</Button>
+                        <Button onClick={() => {toogleIaModal(); setSelectedAnalysis(item)}}>Análise Manual</Button>
                       </DialogTrigger>
                       <DialogContent className="max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl" style={{ height: '90vh' }}>
-                        <ManualAnalysis  toogleIaModal={toogleIaModal} pacienteId={patient.patientId} sexoBiologico={patient.sexoBiologico} />
+                        {
+                          selectedAnalysis && patient && <ManualAnalysis toogleIaModal={toogleIaModal} patient={patient} analysis={selectedAnalysis.imageBase64} />
+                        }
                       </DialogContent>
                     </Dialog>
                   </div>
@@ -179,7 +175,6 @@ export function AnalysisScreen({ patient }) {
               </div>
             </div>
           </Card >
-
         ))
         }
         {

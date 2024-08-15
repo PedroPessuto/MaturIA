@@ -47,6 +47,7 @@ export function LoginForm({ onClick }) {
     })
       .then((callback) => {
         if (callback?.ok) {
+
           toast({
             description: 'Login realizado com sucesso',
           })

@@ -25,7 +25,7 @@ import { P } from '../typo/P'
 export function DadosPacienteForm({ toggleModal, fetchData, patient }) {
   const [paciente, setPaciente] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-
+  const { toast } = useToast()
   const date = new Date()
 
   const currentYear = date.getFullYear().toString()
@@ -51,14 +51,14 @@ export function DadosPacienteForm({ toggleModal, fetchData, patient }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nome: '',
-      peso: '',
-      altura: '',
-      ano: `${currentYear}`,
-      mes: `${currentMonth}`,
-      dia: `${currentDay}`,
-      sexoBiologico: 'Feminino',
-      comorbidades: ''
+      nome: patient !== undefined ? patient.nome : '',
+      peso: patient !== undefined ? patient.peso : '',
+      altura: patient !== undefined ? patient.altura : '',
+      ano: patient !== undefined ? patient.ano : `${currentYear}`,
+      mes: patient !== undefined ? patient.mes : `${currentMonth}`,
+      dia: patient !== undefined ? patient.dia : `${currentDay}`,
+      sexoBiologico: patient !== undefined ? patient.sexoBiologico :  'Feminino',
+      comorbidades: patient !== undefined ? patient.comorbidades :  ''
     }
   })
 
@@ -123,9 +123,9 @@ export function DadosPacienteForm({ toggleModal, fetchData, patient }) {
 
   async function updatePatient(newPatient) {
     try {
-      let completePatient = { ...newPatient, id: patientId }
+      let completePatient = { ...newPatient, id: patient.id }
      
-      await fetch(`/api/patients/update/?id=${patientId}`, {
+      await fetch(`/api/patients/update/?id=${patient.id}`, {
         method: 'PUT',
         cache: 'no-store',
         body: JSON.stringify(completePatient),
@@ -146,7 +146,7 @@ export function DadosPacienteForm({ toggleModal, fetchData, patient }) {
   function onSubmit(data) {
     setIsLoading(true)
 
-    if (patientId != null) {
+    if (patient != null) {
       updatePatient(data)
     } else {
       addPatient(data)
@@ -301,7 +301,7 @@ export function DadosPacienteForm({ toggleModal, fetchData, patient }) {
               <FormItem>
                 <FormLabel>Comorbidades</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Separe as comorbidades por vírgula" {...field} />
+                  <Textarea placeholder="Escreva as comorbidades aqui" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
