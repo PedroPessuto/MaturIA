@@ -57,7 +57,7 @@ export default function Page() {
             </BreadcrumbList>
           </Breadcrumb>
 
-          <PacientesTable data={data} fetchData={fetchData} />
+         <PacientesTable data={data} fetchData={fetchData} />
         </>}
         
       </div>
