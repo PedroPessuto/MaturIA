@@ -60,17 +60,17 @@ export default function Page() {
   }, [getPatient, toast])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="w-full h-full p-12 mt-12">
+    <main className='flex min-h-screen flex-col items-center justify-between'>
+      <div className='w-full h-full p-12 mt-12'>
         <div className='flex flex-col gap-8 '>
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                <BreadcrumbLink href='/'>Home</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
-                <BreadcrumbLink href="/pacientes">Pacientes</BreadcrumbLink>
+                <BreadcrumbLink href='/pacientes'>Pacientes</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -78,13 +78,13 @@ export default function Page() {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <div className="flex w-full gap-5 md:gap-20 flex-col lg:flex-row">
-            <div className="w-full">
+          <div className='flex w-full gap-5 md:gap-20 flex-col lg:flex-row'>
+            <div className='w-full'>
               {
                 patient && <DadosPacienteForm patient={patient} />
               }
             </div>
-            <div className="w-full">
+            <div className='w-full'>
               {
                 patient && <AnalysisScreen patient={patient} />
               }

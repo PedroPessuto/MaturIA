@@ -35,11 +35,11 @@ export default function Page() {
   }, [toast, fetchData])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between">
-      <div className="w-full h-full flex flex-col gap-4 p-12 mt-12">
+    <main className='flex min-h-screen flex-col items-center justify-between'>
+      <div className='w-full h-full flex flex-col gap-4 p-12 mt-12'>
 
         {isLoading && <div className='flex w-full justify-center'>
-          <Loader2 className="h-10 w-10 animate-spin" />
+          <Loader2 className='h-10 w-10 animate-spin' />
         </div>
         }
 
@@ -48,7 +48,7 @@ export default function Page() {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>
-                <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                <BreadcrumbLink href='/'>Home</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator />
               <BreadcrumbItem>

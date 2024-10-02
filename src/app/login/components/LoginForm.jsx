@@ -69,12 +69,12 @@ export function LoginForm({ onClick }) {
 
   return (
     <div className='w-full md:w-1/2 flex flex-col gap-4'>
-      <H2 className="text-center">Login</H2>
+      <H2 className='text-center'>Login</H2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
           <FormField
             control={form.control}
-            name="email"
+            name='email'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>E-mail</FormLabel>
@@ -87,12 +87,12 @@ export function LoginForm({ onClick }) {
           />
           <FormField
             control={form.control}
-            name="senha"
+            name='senha'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" />
+                  <Input {...field} type='password' />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -100,14 +100,14 @@ export function LoginForm({ onClick }) {
           />
           {
             isLoading && <>
-              <Button disabled className="w-full">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Button disabled className='w-full'>
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
               </Button>
             </>
           }
           {
             !isLoading &&
-            <Button type="submit" className="w-full">Entrar</Button>
+            <Button type='submit' className='w-full'>Entrar</Button>
           }
 
         </form>

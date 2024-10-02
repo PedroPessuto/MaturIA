@@ -94,19 +94,19 @@ export function AnalysisScreen({ patient }) {
 
   return (
     <>
-      <H2 className="mb-8">
+      <H2 className='mb-8'>
         <div className='flex flex-col sm:flex-row justify-between gap-8'>
           Análises do Paciente
           <Dialog open={showModal} onOpenChange={toogleModal}>
             <DialogTrigger asChild>
               <Button>Nova Análise</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
+            <DialogContent className='sm:max-w-md'>
               <DialogHeader>
                 <DialogTitle>Nova Análise</DialogTitle>
               </DialogHeader>
-              <div className="flex items-center space-x-2">
-                <div className="grid flex-1 gap-2">
+              <div className='flex items-center space-x-2'>
+                <div className='grid flex-1 gap-2'>
                   {!isLoading && patient && <NewAnalysis patientId={patient.id} getAnalysis={getAnalysis} toogleModal={toogleModal} />}
                 </div>
               </div>
@@ -122,9 +122,9 @@ export function AnalysisScreen({ patient }) {
               <div className='relative flex w-full md:w-3/5 justify-center items-center bg-neutral-100'>
                 <Image
                   src={decodeURIComponent(item.imageBase64)}
-                  alt="Descrição da Imagem"
+                  alt='Descrição da Imagem'
                   fill
-                  className="w-full h-full absolute rounded-l-lg"
+                  className='w-full h-full absolute rounded-l-lg'
                   unoptimized
                 />
               </div>
@@ -163,7 +163,7 @@ export function AnalysisScreen({ patient }) {
                       <DialogTrigger asChild>
                         <Button onClick={() => {toogleIaModal(); setSelectedAnalysis(item)}}>Análise Manual</Button>
                       </DialogTrigger>
-                      <DialogContent className="max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl" style={{ height: '90vh' }}>
+                      <DialogContent className='max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl' style={{ height: '90vh' }}>
                         {
                           selectedAnalysis && patient && <ManualAnalysis toogleIaModal={toogleIaModal} patient={patient} analysis={selectedAnalysis.imageBase64} />
                         }

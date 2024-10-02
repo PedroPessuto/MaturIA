@@ -118,27 +118,27 @@ export function NewAnalysis({ getAnalysis, toogleModal, patientId }) {
   return (
     <div className='mt-4'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
           <FormField
             control={form.control}
-            name="imageBase64"
+            name='imageBase64'
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="grid w-full max-w-sm items-center gap-1.5">
-                    <Label htmlFor="picture">Radiografia</Label>
+                  <div className='grid w-full max-w-sm items-center gap-1.5'>
+                    <Label htmlFor='picture'>Radiografia</Label>
                     <Input
-                      type="file"
-                      accept=".jpeg, .jpg, .png"
+                      type='file'
+                      accept='.jpeg, .jpg, .png'
                       onChange={handleImageChange}
                     />
                     {imagePreview && (
                       <Image
                         src={imagePreview}
-                        alt="Image Preview"
+                        alt='Image Preview'
                         width={200}
                         height={200}
-                        className="w-full max-h-80 rounded-sm"
+                        className='w-full max-h-80 rounded-sm'
                       />
                     )}
                   </div>
@@ -152,7 +152,7 @@ export function NewAnalysis({ getAnalysis, toogleModal, patientId }) {
 
             <FormField
               control={form.control}
-              name="dia"
+              name='dia'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Dia</FormLabel>
@@ -175,7 +175,7 @@ export function NewAnalysis({ getAnalysis, toogleModal, patientId }) {
 
             <FormField
               control={form.control}
-              name="mes"
+              name='mes'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Mês</FormLabel>
@@ -198,7 +198,7 @@ export function NewAnalysis({ getAnalysis, toogleModal, patientId }) {
 
             <FormField
               control={form.control}
-              name="ano"
+              name='ano'
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Ano</FormLabel>
@@ -221,12 +221,12 @@ export function NewAnalysis({ getAnalysis, toogleModal, patientId }) {
 
           </div>
           {isLoading && (
-            <Button disabled className="w-full">
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Button disabled className='w-full'>
+              <Loader2 className='mr-2 h-4 w-4 animate-spin' />
             </Button>
           )}
           {!isLoading && (
-            <Button type="submit" className="w-full">
+            <Button type='submit' className='w-full'>
               Enviar
             </Button>
           )}

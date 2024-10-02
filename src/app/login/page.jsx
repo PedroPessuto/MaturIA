@@ -12,8 +12,8 @@ export default function Page() {
   }
 
   return (
-    <main className="h-screen">
-      <div className="flex flex-col items-center justify-center w-full h-full gap-8 p-8">
+    <main className='h-screen'>
+      <div className='flex flex-col items-center justify-center w-full h-full gap-8 p-8'>
         {
           onLogin && <LoginForm onClick={handleOnLogin} />
         }

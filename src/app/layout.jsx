@@ -18,7 +18,7 @@ export default async function RootLayout({ children }) {
   const session = await getServerSession()
 
   return (
-    <html lang="pt-BR">
+    <html lang='pt-BR'>
       <body className={`${inter.className} overflow-x-hidden`}>
         <NextAuthProvider session={session}>
           <Toaster />

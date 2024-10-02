@@ -48,12 +48,12 @@ export function RegisterForm({ onClick }) {
 
   return (
     <>
-      <H2 className="text-center">Cadastro</H2>
+      <H2 className='text-center'>Cadastro</H2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
           <FormField
             control={form.control}
-            name="usuario"
+            name='usuario'
             render={({ field }) => (
               <FormItem>
                 <FormLabel> Usuário </FormLabel>
@@ -67,7 +67,7 @@ export function RegisterForm({ onClick }) {
 
           <FormField
             control={form.control}
-            name="email"
+            name='email'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>E-mail</FormLabel>
@@ -81,12 +81,12 @@ export function RegisterForm({ onClick }) {
 
           <FormField
             control={form.control}
-            name="senha"
+            name='senha'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Senha</FormLabel>
                 <FormControl>
-                  <Input {...field} type="password" />
+                  <Input {...field} type='password' />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -94,19 +94,19 @@ export function RegisterForm({ onClick }) {
           />
           {
             isLoading && <>
-              <Button disabled className="w-full">
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              <Button disabled className='w-full'>
+                <Loader2 className='mr-2 h-4 w-4 animate-spin' />
               </Button>
             </>
           }
           {
             !isLoading &&
-            <Button type="submit" className="w-full">Cadastrar</Button>
+            <Button type='submit' className='w-full'>Cadastrar</Button>
           }
 
         </form>
       </Form>
-      <Button variant="link" onClick={onClick}>Já tenho uma conta</Button>
+      <Button variant='link' onClick={onClick}>Já tenho uma conta</Button>
     </>
   )
 }
