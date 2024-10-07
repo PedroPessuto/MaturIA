@@ -61,7 +61,7 @@ export default function Page() {
 
   return (
     <main className='flex min-h-screen flex-col items-center justify-between'>
-      <div className='w-full h-full p-12 mt-12'>
+      <div className='w-full h-full p-4 lg:p-12 mt-16'>
         <div className='flex flex-col gap-8 '>
           <Breadcrumb>
             <BreadcrumbList>

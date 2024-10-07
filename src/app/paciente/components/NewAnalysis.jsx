@@ -105,7 +105,6 @@ export function NewAnalysis({ getAnalysis, toogleModal, patientId }) {
       
       toogleModal()
     } catch (error) {
-      console.log()
       toast({
         description: error.message,
         status: 'error',

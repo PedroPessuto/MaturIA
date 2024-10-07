@@ -4,12 +4,11 @@
   import { Input } from '@/components/ui/input'
   import { Button } from '@/components/ui/button'
   import { H2 } from '@/components/custom/typo/H2'
-  import { Coins, Loader2 } from 'lucide-react'
   import { z } from 'zod'
   import { zodResolver } from '@hookform/resolvers/zod'
   import { useForm } from 'react-hook-form'
   import { useRouter } from 'next/navigation'
-  import { useState, useEffect, useCallback } from 'react'
+  import { useState } from 'react'
   import { useToast } from '@/components/ui/use-toast'
   import { Textarea } from '@/components/ui/textarea'
 
@@ -307,7 +306,7 @@
               )}
             />
 
-            <Button type='submit' className='w-full'><Coins className='mr-2 h-4 w-4' /> Salvar</Button>
+            <Button type='submit' className='w-full'>Salvar</Button>
           </form>
         </Form>
       </div>

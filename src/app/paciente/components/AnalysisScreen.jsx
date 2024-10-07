@@ -23,6 +23,7 @@ import { NewAnalysis } from './NewAnalysis'
 import { useCallback, useEffect, useState } from 'react'
 import { ManualAnalysis } from './ManualAnalysis'
 import { useToast } from '@/components/ui/use-toast'
+import { useRouter } from 'next/navigation'
 
 export function AnalysisScreen({ patient }) {
   const { toast } = useToast()
@@ -61,6 +62,8 @@ export function AnalysisScreen({ patient }) {
   const toogleManualModal = () => {
     setShowManualModal(!showManualModal)
   }
+
+  const router = useRouter()
 
   const [showIaModal, setShowIaModal] = useState(false)
   const toogleIaModal = () => {
@@ -119,12 +122,12 @@ export function AnalysisScreen({ patient }) {
         {!isLoading && analysis.slice().reverse().map((item, index) => (
           <Card key={index}>
             <div className='flex gap-4 flex-col md:flex-row w-full'>
-              <div className='relative flex w-full md:w-3/5 justify-center items-center bg-neutral-100'>
+              <div className='relative flex w-full min-h-64 md:w-3/5 justify-center items-center bg-neutral-100'>
                 <Image
                   src={decodeURIComponent(item.imageBase64)}
                   alt='Descrição da Imagem'
                   fill
-                  className='w-full h-full absolute rounded-l-lg'
+                  className='w-full h-full absolute rounded-t-lg md:rounded-l-lg'
                   unoptimized
                 />
               </div>
@@ -150,28 +153,30 @@ export function AnalysisScreen({ patient }) {
 
                     <Large>Idade óssea por análise manual</Large>
                     <Small>
-                      {
-                        item.manualAge === undefined ? 'Não feita' : `${formatAge(item.manualAge)}`
-                      }
+                      {item.manualAge === undefined
+                        ? 'Não feita'
+                        : `TW2: ${item.manualAge.TW2}, RUS: ${item.manualAge.RUS}`}
+
                     </Small>
                   </div>
                 </CardContent>
 
-                <CardFooter>
-                  <div className='flex-col 2xl:flex-row flex gap-4 '>
-                    <Dialog open={showIaModal} onOpenChange={toogleIaModal}>
-                      <DialogTrigger asChild>
-                        <Button onClick={() => {toogleIaModal(); setSelectedAnalysis(item)}}>Análise Manual</Button>
-                      </DialogTrigger>
-                      <DialogContent className='max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl' style={{ height: '90vh' }}>
-                        {
-                          selectedAnalysis && patient && <ManualAnalysis toogleIaModal={toogleIaModal} patient={patient} analysis={selectedAnalysis.imageBase64} />
-                        }
-                      </DialogContent>
-                    </Dialog>
-                  </div>
-                </CardFooter>
-
+                {item.manualAge === undefined &&
+                  <CardFooter>
+                    <div className='flex-col 2xl:flex-row flex gap-4 '>
+                      <Dialog open={showIaModal} onOpenChange={toogleIaModal}>
+                        <DialogTrigger asChild>
+                          <Button onClick={() => { toogleIaModal(); setSelectedAnalysis(item) }}>Análise Manual</Button>
+                        </DialogTrigger>
+                        <DialogContent className='max-w-md sm:max-w-lg md:max-w-4xl xl:max-w-7xl' style={{ height: '90vh' }}>
+                          {
+                            selectedAnalysis && patient && <ManualAnalysis toogleIaModal={toogleIaModal} patient={patient} analysis={selectedAnalysis} />
+                          }
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                  </CardFooter>
+                }
               </div>
             </div>
           </Card >

@@ -2,7 +2,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useToast } from '@/components/ui/use-toast'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -19,17 +18,17 @@ import {
   DialogClose
 } from '@/components/ui/dialog'
 import { Small } from '@/components/custom/typo/Small'
+import { useRouter } from 'next/navigation'
 
 export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
-  const router = useRouter()
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
   const [viewType, setViewType] = useState('raiox')
   const [selecionados, setSelecionados] = useState({})
-
+  const router = useRouter()
   const partes = ['radio', 'ulna']
-  const letras = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
+  const letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
   const tipos = ['TW2', 'RUS']
   const [ages, setAges] = useState()
 
@@ -37,7 +36,7 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
   const [isDisabledConfirmModal, setIsDisabledConfirmModal] = useState(true)
 
   const agesTable = {
-    'meninos': {
+    'Masculino': {
       'table A1': {
         '26': 1.6,
         '32': 1.7,
@@ -211,6 +210,178 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
         '1000': -1
 
       }
+    },
+    'Feminino': {
+      'table A4': {
+        '32': 1,
+        '42': 1.1,
+        '53': 1.2,
+        '63': 1.3,
+        '74': 1.4,
+        '83': 1.5,
+        '92': 1.6,
+        '101': 1.7,
+        '110': 1.8,
+        '117': 1.9,
+
+        '125': 2,
+        '133': 2.1,
+        '140': 2.2,
+        '147': 2.3,
+        '153': 2.4,
+        '159': 2.5,
+        '164': 2.6,
+        '169': 2.7,
+        '175': 2.8,
+        '180': 2.9,
+
+        '185': 3,
+        '189': 3.1,
+        '192': 3.2,
+        '196': 3.3,
+        '200': 3.4,
+        '203': 3.5,
+        '207': 3.6,
+        '210': 3.7,
+        '214': 3.8,
+        '217': 3.9,
+
+        '221': 4,
+        '224': 4.1,
+        '227': 4.2,
+        '230': 4.3,
+        '232': 4.4,
+        '235': 4.5,
+        '238': 4.6,
+        '240': 4.7,
+        '243': 4.8,
+        '246': 4.9,
+
+        '248': 5,
+        '251': 5.1,
+        '253': 5.2,
+        '256': 5.3,
+        '259': 5.4,
+        '261': 5.5,
+        '264': 5.6,
+        '267': 5.7,
+        '270': 5.8,
+        '272': 5.9,
+
+        '275': 6,
+        '277': 6.1,
+        '280': 6.2,
+        '283': 6.3,
+        '286': 6.4,
+        '289': 6.5,
+        '292': 6.6,
+        '295': 6.7,
+        '298': 6.8,
+        '301': 6.9,
+
+        '303': 7,
+        '307': 7.1,
+        '310': 7.2,
+        '314': 7.3,
+        '318': 7.4,
+        '321': 7.5,
+        '324': 7.6,
+        '327': 7.7,
+        '330': 7.8,
+        '334': 7.9,
+
+        '337': 8,
+        '341': 8.1,
+        '344': 8.2,
+        '348': 8.3,
+        '351': 8.4,
+        '355': 8.5,
+        '358': 8.6,
+        '362': 8.7,
+        '366': 8.8,
+        '371': 8.9,
+
+        '375': 9,
+        '380': 9.1,
+        '386': 9.2,
+        '392': 9.3,
+        '397': 9.4,
+        '402': 9.5,
+        '407': 9.6,
+        '413': 9.7,
+        '419': 9.8,
+        '425': 9.9,
+
+        '431': 10,
+        '437': 10.1,
+        '444': 10.2,
+        '450': 10.3,
+        '457': 10.4,
+        '464': 10.5,
+        '471': 10.6,
+        '478': 10.7,
+        '485': 10.8,
+        '493': 10.9,
+
+        '500': 11,
+        '507': 11.1,
+        '515': 11.2,
+        '523': 11.3,
+        '530': 11.4,
+        '538': 11.5,
+        '545': 11.6,
+        '553': 11.7,
+        '560': 11.8,
+        '569': 11.9,
+
+        '578': 12,
+        '587': 12.1,
+        '596': 12.2,
+        '605': 12.3,
+        '614': 12.4,
+        '624': 12.5,
+        '633': 12.6,
+        '643': 12.7,
+        '653': 12.8,
+        '664': 12.9,
+
+        '674': 13,
+        '684': 13.1,
+        '695': 13.2,
+        '705': 13.3,
+        '715': 13.4,
+        '726': 13.5,
+        '737': 13.6,
+        '747': 13.7,
+        '758': 13.8,
+        '769': 13.9,
+
+        '779': 14,
+        '790': 14.1,
+        '801': 14.2,
+        '812': 14.3,
+        '822': 14.4,
+        '834': 14.5,
+        '847': 14.6,
+        '859': 14.7,
+        '873': 14.8,
+        '886': 14.9,
+
+        '900': 15,
+        '915': 15.1,
+        '929': 15.2,
+        '942': 15.3,
+        '954': 15.4,
+        '966': 15.5,
+        '977': 15.6,
+        '986': 15.7,
+        '993': 15.8,
+        '997': 15.9,
+
+        '1000': -1
+      }
+
+
     }
   }
 
@@ -416,401 +587,427 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
         { nome: 'I', caminho: '/xray/radio/Radio-I-Desenho.png' }
       ],
     },
-    {
-      name: 'Etapa 2',
-      parte: 'ulna',
-      descricao: 'Selecione o Ulna correspondente',
-      imagensRaiox: [
+    // {
+    //   name: 'Etapa 2',
+    //   parte: 'ulna',
+    //   descricao: 'Selecione o Ulna correspondente',
+    //   imagensRaiox: [
 
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/ulna/ulna-B.png' },
-        { nome: 'C', caminho: '/xray/ulna/ulna-C.png' },
-        { nome: 'D', caminho: '/xray/ulna/ulna-D.png' },
-        { nome: 'E', caminho: '/xray/ulna/ulna-E.png' },
-        { nome: 'F', caminho: '/xray/ulna/ulna-F.png' },
-        { nome: 'G', caminho: '/xray/ulna/ulna-G.png' },
-        { nome: 'H', caminho: '/xray/ulna/ulna-H.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/ulna/ulna-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/ulna/ulna-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/ulna/ulna-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/ulna/ulna-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/ulna/ulna-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/ulna/ulna-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/ulna/ulna-H-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 3',
-      parte: 'primeiroMetacarpal',
-      descricao: 'Selecione o Primeiro Metacarpal correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-B.png' },
-        { nome: 'C', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-C.png' },
-        { nome: 'D', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-D.png' },
-        { nome: 'E', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-E.png' },
-        { nome: 'F', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-F.png' },
-        { nome: 'G', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-G.png' },
-        { nome: 'H', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-H.png' },
-        { nome: 'I', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 4',
-      parte: 'terceiroEquintoMetacarpal',
-      descricao: 'Selecione o Terceiro e Quinto Metacarpal correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-B.png' },
-        { nome: 'C', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-C.png' },
-        { nome: 'D', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-D.png' },
-        { nome: 'E', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-E.png' },
-        { nome: 'F', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-F.png' },
-        { nome: 'G', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-G.png' },
-        { nome: 'H', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-H.png' },
-        { nome: 'I', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 5',
-      parte: 'falangeProximalDoPolegar',
-      descricao: 'Selecione o Falange Proximal do Polegar correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-B.png' },
-        { nome: 'C', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-C.png' },
-        { nome: 'D', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-D.png' },
-        { nome: 'E', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-E.png' },
-        { nome: 'F', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-F.png' },
-        { nome: 'G', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-G.png' },
-        { nome: 'H', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-H.png' },
-        { nome: 'I', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 6',
-      parte: 'falangesProximaisDoTerceiroEquintoDedo',
-      descricao: 'Selecione o Falange Proximal do Terceiro e Quinto Dedo correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-B.png' },
-        { nome: 'C', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-C.png' },
-        { nome: 'D', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-D.png' },
-        { nome: 'E', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-E.png' },
-        { nome: 'F', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-F.png' },
-        { nome: 'G', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-G.png' },
-        { nome: 'H', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-H.png' },
-        { nome: 'I', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 7',
-      parte: 'falangesMediasDoTerceiroEquintoDedo',
-      descricao: 'Selecione o Falange Medianos do Terceiro e Quinto Dedo correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-B.png' },
-        { nome: 'C', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-C.png' },
-        { nome: 'D', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-D.png' },
-        { nome: 'E', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-E.png' },
-        { nome: 'F', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-F.png' },
-        { nome: 'G', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-G.png' },
-        { nome: 'H', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-H.png' },
-        { nome: 'I', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 8',
-      parte: 'falangeDistalDoPolegar',
-      descricao: 'Selecione o Falange Distal do Polegar correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-B.png' },
-        { nome: 'C', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-C.png' },
-        { nome: 'D', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-D.png' },
-        { nome: 'E', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-E.png' },
-        { nome: 'F', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-F.png' },
-        { nome: 'G', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-G.png' },
-        { nome: 'H', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-H.png' },
-        { nome: 'I', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 9',
-      parte: 'falangesDistalDoTerceiroEquintoDedo',
-      descricao: 'Selecione o Falange Distal do Terceiro e Quinto Dedo correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-B.png' },
-        { nome: 'C', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-C.png' },
-        { nome: 'D', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-D.png' },
-        { nome: 'E', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-E.png' },
-        { nome: 'F', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-F.png' },
-        { nome: 'G', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-G.png' },
-        { nome: 'H', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-H.png' },
-        { nome: 'I', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 10',
-      parte: 'capitato',
-      descricao: 'Selecione o Capitato correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/capitato/capitato-B.png' },
-        { nome: 'C', caminho: '/xray/capitato/capitato-C.png' },
-        { nome: 'D', caminho: '/xray/capitato/capitato-D.png' },
-        { nome: 'E', caminho: '/xray/capitato/capitato-E.png' },
-        { nome: 'F', caminho: '/xray/capitato/capitato-F.png' },
-        { nome: 'G', caminho: '/xray/capitato/capitato-G.png' },
-        { nome: 'H', caminho: '/xray/capitato/capitato-H.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/capitato/capitato-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/capitato/capitato-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/capitato/capitato-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/capitato/capitato-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/capitato/capitato-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/capitato/capitato-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/capitato/capitato-H-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 11',
-      parte: 'hamato',
-      descricao: 'Selecione o Hamato correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/hamato/hamato-B.png' },
-        { nome: 'C', caminho: '/xray/hamato/hamato-C.png' },
-        { nome: 'D', caminho: '/xray/hamato/hamato-D.png' },
-        { nome: 'E', caminho: '/xray/hamato/hamato-E.png' },
-        { nome: 'F', caminho: '/xray/hamato/hamato-F.png' },
-        { nome: 'G', caminho: '/xray/hamato/hamato-G.png' },
-        { nome: 'H', caminho: '/xray/hamato/hamato-H.png' },
-        { nome: 'I', caminho: '/xray/hamato/hamato-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/hamato/hamato-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/hamato/hamato-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/hamato/hamato-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/hamato/hamato-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/hamato/hamato-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/hamato/hamato-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/hamato/hamato-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/hamato/hamato-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 12',
-      parte: 'piramidal',
-      descricao: 'Selecione o Piramidal correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/piramidal/piramidal-B.png' },
-        { nome: 'C', caminho: '/xray/piramidal/piramidal-C.png' },
-        { nome: 'D', caminho: '/xray/piramidal/piramidal-D.png' },
-        { nome: 'E', caminho: '/xray/piramidal/piramidal-E.png' },
-        { nome: 'F', caminho: '/xray/piramidal/piramidal-F.png' },
-        { nome: 'G', caminho: '/xray/piramidal/piramidal-G.png' },
-        { nome: 'H', caminho: '/xray/piramidal/piramidal-H.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/piramidal/piramidal-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/piramidal/piramidal-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/piramidal/piramidal-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/piramidal/piramidal-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/piramidal/piramidal-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/piramidal/piramidal-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/piramidal/piramidal-H-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 13',
-      parte: 'semilunar',
-      descricao: 'Selecione o Semilunar correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/semilunar/semilunar-B.png' },
-        { nome: 'C', caminho: '/xray/semilunar/semilunar-C.png' },
-        { nome: 'D', caminho: '/xray/semilunar/semilunar-D.png' },
-        { nome: 'E', caminho: '/xray/semilunar/semilunar-E.png' },
-        { nome: 'F', caminho: '/xray/semilunar/semilunar-F.png' },
-        { nome: 'G', caminho: '/xray/semilunar/semilunar-G.png' },
-        { nome: 'H', caminho: '/xray/semilunar/semilunar-H.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/semilunar/semilunar-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/semilunar/semilunar-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/semilunar/semilunar-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/semilunar/semilunar-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/semilunar/semilunar-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/semilunar/semilunar-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/semilunar/semilunar-H-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 14',
-      parte: 'escafoide',
-      descricao: 'Selecione o Escafóide correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/escafoide/escafoide-B.png' },
-        { nome: 'C', caminho: '/xray/escafoide/escafoide-C.png' },
-        { nome: 'D', caminho: '/xray/escafoide/escafoide-D.png' },
-        { nome: 'E', caminho: '/xray/escafoide/escafoide-E.png' },
-        { nome: 'F', caminho: '/xray/escafoide/escafoide-F.png' },
-        { nome: 'G', caminho: '/xray/escafoide/escafoide-G.png' },
-        { nome: 'H', caminho: '/xray/escafoide/escafoide-H.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/escafoide/escafoide-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/escafoide/escafoide-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/escafoide/escafoide-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/escafoide/escafoide-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/escafoide/escafoide-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/escafoide/escafoide-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/escafoide/escafoide-H-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 15',
-      parte: 'trapezio',
-      descricao: 'Selecione o Trapézio correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/trapezio/trapezio-B.png' },
-        { nome: 'C', caminho: '/xray/trapezio/trapezio-C.png' },
-        { nome: 'D', caminho: '/xray/trapezio/trapezio-D.png' },
-        { nome: 'E', caminho: '/xray/trapezio/trapezio-E.png' },
-        { nome: 'F', caminho: '/xray/trapezio/trapezio-F.png' },
-        { nome: 'G', caminho: '/xray/trapezio/trapezio-G.png' },
-        { nome: 'H', caminho: '/xray/trapezio/trapezio-H.png' },
-        { nome: 'I', caminho: '/xray/trapezio/trapezio-I.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/trapezio/trapezio-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/trapezio/trapezio-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/trapezio/trapezio-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/trapezio/trapezio-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/trapezio/trapezio-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/trapezio/trapezio-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/trapezio/trapezio-H-Desenho.png' },
-        { nome: 'I', caminho: '/xray/trapezio/trapezio-I-Desenho.png' },
-      ],
-    },
-    {
-      name: 'Etapa 16',
-      parte: 'trapezoide',
-      descricao: 'Selecione o Trapezóide correspondente',
-      imagensRaiox: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/trapezoide/trapezoide-B.png' },
-        { nome: 'C', caminho: '/xray/trapezoide/trapezoide-C.png' },
-        { nome: 'D', caminho: '/xray/trapezoide/trapezoide-D.png' },
-        { nome: 'E', caminho: '/xray/trapezoide/trapezoide-E.png' },
-        { nome: 'F', caminho: '/xray/trapezoide/trapezoide-F.png' },
-        { nome: 'G', caminho: '/xray/trapezoide/trapezoide-G.png' },
-        { nome: 'H', caminho: '/xray/trapezoide/trapezoide-H.png' },
-      ],
-      imagensDesenho: [
-        { nome: 'A', caminho: '/None.svg' },
-        { nome: 'B', caminho: '/xray/trapezoide/trapezoide-B-Desenho.png' },
-        { nome: 'C', caminho: '/xray/trapezoide/trapezoide-C-Desenho.png' },
-        { nome: 'D', caminho: '/xray/trapezoide/trapezoide-D-Desenho.png' },
-        { nome: 'E', caminho: '/xray/trapezoide/trapezoide-E-Desenho.png' },
-        { nome: 'F', caminho: '/xray/trapezoide/trapezoide-F-Desenho.png' },
-        { nome: 'G', caminho: '/xray/trapezoide/trapezoide-G-Desenho.png' },
-        { nome: 'H', caminho: '/xray/trapezoide/trapezoide-H-Desenho.png' },
-      ],
-    },
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/ulna/ulna-B.png' },
+    //     { nome: 'C', caminho: '/xray/ulna/ulna-C.png' },
+    //     { nome: 'D', caminho: '/xray/ulna/ulna-D.png' },
+    //     { nome: 'E', caminho: '/xray/ulna/ulna-E.png' },
+    //     { nome: 'F', caminho: '/xray/ulna/ulna-F.png' },
+    //     { nome: 'G', caminho: '/xray/ulna/ulna-G.png' },
+    //     { nome: 'H', caminho: '/xray/ulna/ulna-H.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/ulna/ulna-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/ulna/ulna-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/ulna/ulna-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/ulna/ulna-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/ulna/ulna-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/ulna/ulna-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/ulna/ulna-H-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 3',
+    //   parte: 'primeiroMetacarpal',
+    //   descricao: 'Selecione o Primeiro Metacarpal correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-B.png' },
+    //     { nome: 'C', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-C.png' },
+    //     { nome: 'D', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-D.png' },
+    //     { nome: 'E', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-E.png' },
+    //     { nome: 'F', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-F.png' },
+    //     { nome: 'G', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-G.png' },
+    //     { nome: 'H', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-H.png' },
+    //     { nome: 'I', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/primeiroMetacarpal/primeiroMetacarpal-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 4',
+    //   parte: 'terceiroEquintoMetacarpal',
+    //   descricao: 'Selecione o Terceiro e Quinto Metacarpal correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-B.png' },
+    //     { nome: 'C', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-C.png' },
+    //     { nome: 'D', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-D.png' },
+    //     { nome: 'E', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-E.png' },
+    //     { nome: 'F', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-F.png' },
+    //     { nome: 'G', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-G.png' },
+    //     { nome: 'H', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-H.png' },
+    //     { nome: 'I', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/terceiroEquintoMetacarpal/terceiroEquintoMetacarpal-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 5',
+    //   parte: 'falangeProximalDoPolegar',
+    //   descricao: 'Selecione o Falange Proximal do Polegar correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-B.png' },
+    //     { nome: 'C', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-C.png' },
+    //     { nome: 'D', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-D.png' },
+    //     { nome: 'E', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-E.png' },
+    //     { nome: 'F', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-F.png' },
+    //     { nome: 'G', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-G.png' },
+    //     { nome: 'H', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-H.png' },
+    //     { nome: 'I', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/falangeProximalDoPolegar/falangeProximalDoPolegar-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 6',
+    //   parte: 'falangesProximaisDoTerceiroEquintoDedo',
+    //   descricao: 'Selecione o Falange Proximal do Terceiro e Quinto Dedo correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-B.png' },
+    //     { nome: 'C', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-C.png' },
+    //     { nome: 'D', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-D.png' },
+    //     { nome: 'E', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-E.png' },
+    //     { nome: 'F', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-F.png' },
+    //     { nome: 'G', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-G.png' },
+    //     { nome: 'H', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-H.png' },
+    //     { nome: 'I', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/falangesProximaisDoTerceiroEquintoDedo/falangesProximaisDoTerceiroEquintoDedo-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 7',
+    //   parte: 'falangesMediasDoTerceiroEquintoDedo',
+    //   descricao: 'Selecione o Falange Medianos do Terceiro e Quinto Dedo correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-B.png' },
+    //     { nome: 'C', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-C.png' },
+    //     { nome: 'D', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-D.png' },
+    //     { nome: 'E', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-E.png' },
+    //     { nome: 'F', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-F.png' },
+    //     { nome: 'G', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-G.png' },
+    //     { nome: 'H', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-H.png' },
+    //     { nome: 'I', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/falangesMediasDoTerceiroEquintoDedo/falangesMediasDoTerceiroEquintoDedo-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 8',
+    //   parte: 'falangeDistalDoPolegar',
+    //   descricao: 'Selecione o Falange Distal do Polegar correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-B.png' },
+    //     { nome: 'C', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-C.png' },
+    //     { nome: 'D', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-D.png' },
+    //     { nome: 'E', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-E.png' },
+    //     { nome: 'F', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-F.png' },
+    //     { nome: 'G', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-G.png' },
+    //     { nome: 'H', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-H.png' },
+    //     { nome: 'I', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/falangeDistalDoPolegar/falangeDistalDoPolegar-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 9',
+    //   parte: 'falangesDistalDoTerceiroEquintoDedo',
+    //   descricao: 'Selecione o Falange Distal do Terceiro e Quinto Dedo correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-B.png' },
+    //     { nome: 'C', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-C.png' },
+    //     { nome: 'D', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-D.png' },
+    //     { nome: 'E', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-E.png' },
+    //     { nome: 'F', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-F.png' },
+    //     { nome: 'G', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-G.png' },
+    //     { nome: 'H', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-H.png' },
+    //     { nome: 'I', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/falangesDistalDoTerceiroEquintoDedo/falangesDistalDoTerceiroEquintoDedo-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 10',
+    //   parte: 'capitato',
+    //   descricao: 'Selecione o Capitato correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/capitato/capitato-B.png' },
+    //     { nome: 'C', caminho: '/xray/capitato/capitato-C.png' },
+    //     { nome: 'D', caminho: '/xray/capitato/capitato-D.png' },
+    //     { nome: 'E', caminho: '/xray/capitato/capitato-E.png' },
+    //     { nome: 'F', caminho: '/xray/capitato/capitato-F.png' },
+    //     { nome: 'G', caminho: '/xray/capitato/capitato-G.png' },
+    //     { nome: 'H', caminho: '/xray/capitato/capitato-H.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/capitato/capitato-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/capitato/capitato-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/capitato/capitato-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/capitato/capitato-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/capitato/capitato-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/capitato/capitato-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/capitato/capitato-H-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 11',
+    //   parte: 'hamato',
+    //   descricao: 'Selecione o Hamato correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/hamato/hamato-B.png' },
+    //     { nome: 'C', caminho: '/xray/hamato/hamato-C.png' },
+    //     { nome: 'D', caminho: '/xray/hamato/hamato-D.png' },
+    //     { nome: 'E', caminho: '/xray/hamato/hamato-E.png' },
+    //     { nome: 'F', caminho: '/xray/hamato/hamato-F.png' },
+    //     { nome: 'G', caminho: '/xray/hamato/hamato-G.png' },
+    //     { nome: 'H', caminho: '/xray/hamato/hamato-H.png' },
+    //     { nome: 'I', caminho: '/xray/hamato/hamato-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/hamato/hamato-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/hamato/hamato-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/hamato/hamato-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/hamato/hamato-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/hamato/hamato-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/hamato/hamato-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/hamato/hamato-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/hamato/hamato-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 12',
+    //   parte: 'piramidal',
+    //   descricao: 'Selecione o Piramidal correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/piramidal/piramidal-B.png' },
+    //     { nome: 'C', caminho: '/xray/piramidal/piramidal-C.png' },
+    //     { nome: 'D', caminho: '/xray/piramidal/piramidal-D.png' },
+    //     { nome: 'E', caminho: '/xray/piramidal/piramidal-E.png' },
+    //     { nome: 'F', caminho: '/xray/piramidal/piramidal-F.png' },
+    //     { nome: 'G', caminho: '/xray/piramidal/piramidal-G.png' },
+    //     { nome: 'H', caminho: '/xray/piramidal/piramidal-H.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/piramidal/piramidal-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/piramidal/piramidal-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/piramidal/piramidal-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/piramidal/piramidal-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/piramidal/piramidal-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/piramidal/piramidal-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/piramidal/piramidal-H-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 13',
+    //   parte: 'semilunar',
+    //   descricao: 'Selecione o Semilunar correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/semilunar/semilunar-B.png' },
+    //     { nome: 'C', caminho: '/xray/semilunar/semilunar-C.png' },
+    //     { nome: 'D', caminho: '/xray/semilunar/semilunar-D.png' },
+    //     { nome: 'E', caminho: '/xray/semilunar/semilunar-E.png' },
+    //     { nome: 'F', caminho: '/xray/semilunar/semilunar-F.png' },
+    //     { nome: 'G', caminho: '/xray/semilunar/semilunar-G.png' },
+    //     { nome: 'H', caminho: '/xray/semilunar/semilunar-H.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/semilunar/semilunar-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/semilunar/semilunar-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/semilunar/semilunar-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/semilunar/semilunar-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/semilunar/semilunar-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/semilunar/semilunar-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/semilunar/semilunar-H-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 14',
+    //   parte: 'escafoide',
+    //   descricao: 'Selecione o Escafóide correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/escafoide/escafoide-B.png' },
+    //     { nome: 'C', caminho: '/xray/escafoide/escafoide-C.png' },
+    //     { nome: 'D', caminho: '/xray/escafoide/escafoide-D.png' },
+    //     { nome: 'E', caminho: '/xray/escafoide/escafoide-E.png' },
+    //     { nome: 'F', caminho: '/xray/escafoide/escafoide-F.png' },
+    //     { nome: 'G', caminho: '/xray/escafoide/escafoide-G.png' },
+    //     { nome: 'H', caminho: '/xray/escafoide/escafoide-H.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/escafoide/escafoide-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/escafoide/escafoide-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/escafoide/escafoide-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/escafoide/escafoide-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/escafoide/escafoide-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/escafoide/escafoide-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/escafoide/escafoide-H-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 15',
+    //   parte: 'trapezio',
+    //   descricao: 'Selecione o Trapézio correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/trapezio/trapezio-B.png' },
+    //     { nome: 'C', caminho: '/xray/trapezio/trapezio-C.png' },
+    //     { nome: 'D', caminho: '/xray/trapezio/trapezio-D.png' },
+    //     { nome: 'E', caminho: '/xray/trapezio/trapezio-E.png' },
+    //     { nome: 'F', caminho: '/xray/trapezio/trapezio-F.png' },
+    //     { nome: 'G', caminho: '/xray/trapezio/trapezio-G.png' },
+    //     { nome: 'H', caminho: '/xray/trapezio/trapezio-H.png' },
+    //     { nome: 'I', caminho: '/xray/trapezio/trapezio-I.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/trapezio/trapezio-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/trapezio/trapezio-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/trapezio/trapezio-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/trapezio/trapezio-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/trapezio/trapezio-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/trapezio/trapezio-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/trapezio/trapezio-H-Desenho.png' },
+    //     { nome: 'I', caminho: '/xray/trapezio/trapezio-I-Desenho.png' },
+    //   ],
+    // },
+    // {
+    //   name: 'Etapa 16',
+    //   parte: 'trapezoide',
+    //   descricao: 'Selecione o Trapezóide correspondente',
+    //   imagensRaiox: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/trapezoide/trapezoide-B.png' },
+    //     { nome: 'C', caminho: '/xray/trapezoide/trapezoide-C.png' },
+    //     { nome: 'D', caminho: '/xray/trapezoide/trapezoide-D.png' },
+    //     { nome: 'E', caminho: '/xray/trapezoide/trapezoide-E.png' },
+    //     { nome: 'F', caminho: '/xray/trapezoide/trapezoide-F.png' },
+    //     { nome: 'G', caminho: '/xray/trapezoide/trapezoide-G.png' },
+    //     { nome: 'H', caminho: '/xray/trapezoide/trapezoide-H.png' },
+    //   ],
+    //   imagensDesenho: [
+    //     { nome: 'A', caminho: '/None.svg' },
+    //     { nome: 'B', caminho: '/xray/trapezoide/trapezoide-B-Desenho.png' },
+    //     { nome: 'C', caminho: '/xray/trapezoide/trapezoide-C-Desenho.png' },
+    //     { nome: 'D', caminho: '/xray/trapezoide/trapezoide-D-Desenho.png' },
+    //     { nome: 'E', caminho: '/xray/trapezoide/trapezoide-E-Desenho.png' },
+    //     { nome: 'F', caminho: '/xray/trapezoide/trapezoide-F-Desenho.png' },
+    //     { nome: 'G', caminho: '/xray/trapezoide/trapezoide-G-Desenho.png' },
+    //     { nome: 'H', caminho: '/xray/trapezoide/trapezoide-H-Desenho.png' },
+    //   ],
+    // },
   ]
+
+  const getAgeFromScore = (score, gender, table) => {
+    if (!agesTable[gender] || !agesTable[gender][table]) {
+      return 'Table not found'
+    }
+
+    const ageTable = agesTable[gender][table]
+    const scores = Object.keys(ageTable).map(Number).sort((a, b) => a - b)
+    let age = 'Idade não encontrada'
+
+    for (let i = 0; i < scores.length; i++) {
+      if (score <= scores[i]) {
+        age = ageTable[scores[i]]
+        break
+      }
+    }
+
+    if (age === -1) {
+      return 'Adulto'
+    } else if (typeof age === 'number') {
+      return `${age} anos`
+    } else {
+      return age
+    }
+  }
+
 
   const handleViewTypeChange = (type) => {
     setViewType(type)
@@ -834,35 +1031,67 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
     }
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setIsLoading(true)
 
     let totalTW2 = 0
     let totalRUS = 0
 
-    for (let i = 0; i < Object.keys(selecionados).length; i++) {
-      const x = values[partes[`${i}`]][letras[selecionados[`${i}`]]][patient.sexoBiologico]
-      totalTW2 += x['TW2']
-      totalRUS += x['RUS']
-    }
+    const gender = patient.sexoBiologico
+    const table = patient.sexoBiologico === 'Masculino' ? 'table A1' : 'table A4'
+
+    Object.entries(selecionados).forEach(([key, value]) => {
+      const parte = steps[key].parte
+      const letra = letras[value]
+      const sexoData = values[parte][letra][gender]
+
+      if (sexoData) {
+        totalTW2 += sexoData['TW2']
+        totalRUS += sexoData['RUS']
+      }
+    })
+
+    const ageTW2 = getAgeFromScore(totalTW2, gender, table)
+    const ageRUS = getAgeFromScore(totalRUS, gender, table)
 
     let y = {
-      'TW2': totalTW2,
-      'RUS': totalRUS,
+      TW2: ageTW2,
+      RUS: ageRUS,
     }
 
     setAges(y)
     setIsLoading(false)
     setCurrentStep(currentStep + 1)
+
+    try {
+      const response = await fetch('http://localhost:3001/api/analysis/update', {
+        method: 'PUT',
+        cache: 'no-cache',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...analysis,
+          manualAge: y,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update analysis')
+      }
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        description: `Erro ao atualizar análise: ${error.message}`,
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleSelectImage = (stepIndex, imageIndex) => {
-    let newSelecteds = (prevSelecionados) => ({
+    setSelecionados((prevSelecionados) => ({
       ...prevSelecionados,
       [stepIndex]: imageIndex,
-    })
-
-    setSelecionados(newSelecteds)
+    }))
 
     if (stepIndex === steps.length - 1) {
       setIsDisabledConfirmModal(false)
@@ -908,7 +1137,6 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
     )
   }
 
-
   return (
     <div className='flex-col flex h-full w-full overflow-y-auto overflow-x-hidden'>
       <div className='w-full h-full flex flex-col gap-4'>
@@ -919,7 +1147,7 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
             <div className='flex-col flex sm:flex-row w-full gap-8'>
               <div className='w-full sm:w-2/3'>
                 <Tabs defaultValue={viewType} onValueChange={handleViewTypeChange}>
-                  <div className='flex w-full justify-center'>
+                  <div className='flex flex-col lg:flex-row gap-4 w-full justify-center'>
                     <div className='flex w-full justify-between'>
                       {currentStep !== 0 && (
                         <Button onClick={handlePreviousStep} disabled={isLoading}>
@@ -927,16 +1155,17 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
                         </Button>
                       )}
                     </div>
-
-                    <TabsList>
-                      <TabsTrigger value='raiox'>Raio-X</TabsTrigger>
-                      <TabsTrigger value='desenho'>Desenho</TabsTrigger>
-                    </TabsList>
+                    <div className='mx-auto'>
+                      <TabsList>
+                        <TabsTrigger value='raiox'>Raio-X</TabsTrigger>
+                        <TabsTrigger value='desenho'>Desenho</TabsTrigger>
+                      </TabsList>
+                    </div>
 
                     <div className='flex w-full justify-end'>
                       {currentStep === steps.length - 1 ? (
                         <Dialog open={showConfirmModal} onOpenChange={() => { setShowConfirmModal(!showConfirmModal) }}>
-                          <DialogTrigger>
+                          <DialogTrigger asChild>
                             <Button disabled={isDisabledConfirmModal}>Finalizar</Button>
                           </DialogTrigger>
                           <DialogContent>
@@ -957,9 +1186,9 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
                     </div>
                   </div>
                   <TabsContent value='raiox'>
-                    <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 h-full'>
+                    <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4'>
                       {steps[currentStep].imagensRaiox.map((image, index) => (
-                        <div
+                        <button
                           key={index}
                           className={`relative flex flex-col items-center justify-between h-full rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-blue-500' : 'border-neutral-200'}`}
                           onClick={() => handleSelectImage(currentStep, index)}
@@ -969,41 +1198,40 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
                             alt={image.nome}
                             width={100}
                             height={100}
-                            className='w-full h-full rounded-t-lg'
                           />
-                          <button className={`w-full p-2 font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
+                          <span className={`w-full lg:p-2 text-xs lg:text-small font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
                             {selecionados[currentStep] === index ? 'Selecionado' : `Selecionar ${image.nome}`}
-                          </button>
-                        </div>
+                          </span>
+                        </button>
                       ))}
                     </div>
                   </TabsContent>
                   <TabsContent value='desenho'>
                     <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4'>
                       {steps[currentStep].imagensDesenho.map((image, index) => (
-                        <div
+                        <button
                           key={index}
                           className={`relative flex flex-col items-center justify-between h-full rounded-lg border-4 ${selecionados[currentStep] === index ? 'border-blue-500' : 'border-neutral-200'}`}
                           onClick={() => handleSelectImage(currentStep, index)}
                         >
-                          <ZoomImage
+                          <Image
                             src={image.caminho}
                             alt={image.nome}
                             width={100}
                             height={100}
                           />
-                          <button className={`w-full p-2 font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
+                          <span className={`w-full lg:p-2 text-xs lg:text-small font-medium ${selecionados[currentStep] === index ? 'bg-blue-500 text-white' : 'bg-neutral-200'}`}>
                             {selecionados[currentStep] === index ? 'Selecionado' : `Selecionar ${image.nome}`}
-                          </button>
-                        </div>
+                          </span>
+                        </button>
                       ))}
                     </div>
                   </TabsContent>
                 </Tabs>
               </div>
-              <div className='w-full sm:w-1/3 h-full flex'>
+              <div className='w-full sm:w-1/2 h-full flex'>
                 <ZoomImage
-                  src={decodeURIComponent(analysis)}
+                  src={decodeURIComponent(analysis.imageBase64)}
                   alt={'Imagem Para Comparação'}
                   width={100}
                   height={100}
@@ -1021,17 +1249,19 @@ export function ManualAnalysis({ toogleIaModal, patient, analysis }) {
                 {tipos.map((item, index) => (
                   <div key={index} className='flex flex-col justify-center items-center'>
                     <Small>{item}</Small>
-                    <h3 className='italic text-6xl'>{ages[tipos[index]]}</h3>
+                    <h3 className='italic text-6xl'>
+                      {ages[tipos[index]]}
+                    </h3>
                   </div>
                 ))}
               </div>
-              <Button onClick={() => { toogleIaModal() }}>Retornar</Button>
+              <Button onClick={() => {
+                window.location.reload()
+              }}>Retornar</Button>
             </div>
           </>
         )}
       </div>
     </div>
-
   )
-
 }
