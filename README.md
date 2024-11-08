@@ -16,7 +16,7 @@ Para iniciar o projeto localmente, siga os passos abaixo:
 
 1. **Clone o repositório**: Baixe o código fonte do repositório.
    ```bash
-   git clone https://github.com/seuusuario/optimi.git
+   git clone https://github.com/PedroPessuto/MaturIA.git
    ```
 
 2. **Instale as dependências**: Execute o comando
