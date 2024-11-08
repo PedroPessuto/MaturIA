@@ -1,7 +1,7 @@
 
 ## 📚 Descrição
 
-Projeto de iniciação tecnológica "Sistema de Cálculo de Maturidade Esquelética com IA | MackPesquisa e Santa Casa" focado na análise da **maturidade esquelética** para diagnosticar e tratar doenças que afetam o crescimento infantil. Utilizando **técnicas de inteligência artificial**, o Optimi facilita a interpretação de dados médicos de maneira precisa e eficiente. A interface do aplicativo foi desenvolvida com **Next.js**, **Next Auth**, **React**, **ShadCN**, **Tailwind CSS** e json-server para testes de API, proporcionando uma experiência responsiva e moderna para os usuários. 
+Projeto de iniciação tecnológica **"Sistema de Cálculo de Maturidade Esquelética com IA | MackPesquisa e Santa Casa"** focado na análise da **maturidade esquelética** para diagnosticar e tratar doenças que afetam o crescimento infantil. Utilizando **técnicas de inteligência artificial**, o Optimi facilita a interpretação de dados médicos de maneira precisa e eficiente. A interface do aplicativo foi desenvolvida com **Next.js**, **Next Auth**, **React**, **ShadCN**, **Tailwind CSS** e json-server para testes de API, proporcionando uma experiência responsiva e moderna para os usuários. 
 
 O projeto busca automatizar e aprimorar o diagnóstico médico, permitindo que profissionais da saúde realizem análises mais rápidas e assertivas. Com isso, espera-se melhorar o acompanhamento do crescimento infantil e proporcionar intervenções mais oportunas e eficazes.
 
